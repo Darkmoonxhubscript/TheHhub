@@ -412,38 +412,49 @@ function clearTimerStart() {
     }
 
     async function fetchKey() {
-  const keyInput = document.getElementById('keyInput');
-  const status = document.getElementById('status');
-  
+  const _0x1a2b = document['getElementById']('keyInput');
+  const _0x3c4d = document['getElementById']('status');
   try {
-    keyInput.placeholder = 'Loading...';
-    status.textContent = 'Fetching key...';
-    status.className = 'status show loading';
+    _0x1a2b['placeholder'] = 'Loading...';
+    _0x3c4d['textContent'] = 'Fetching key...';
+    _0x3c4d['className'] = 'status show loading';
     
-    const encoded = "aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3LzdwTGFnQVpF";
-    const decodedURL = atob(encoded);
-    const proxyURL = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(decodedURL);
+    const _0x5f6a = ['YUhSMGNEb3ZMM1J2Y21j', 'b0xXNWpiMlJsWTJGc2FHOXpkQzVqYjIwdA=='];
     
-    const response = await fetch(proxyURL);
-    if (!response.ok) throw new Error('Fetch failed');
+    function _0x9abc(_0xdef0) {
+      return atob(_0xdef0);
+    }
     
-    const text = await response.text();
-    keyInput.value = text.trim();
+    let _0x3456 = '';
+    for (let _0x7f8e = 0; _0x7f8e < _0x5f6a['length']; _0x7f8e++) {
+      _0x3456 += _0x9abc(_0x5f6a[_0x7f8e]);
+    }
     
-    if (!localStorage.getItem('verificationTime')) {
-      setVerifiedFor24Hours(); 
+    const _0x8b9c = _0x9abc(_0x3456);
+    const _0x7a6b = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(_0x8b9c);
+    
+    const _0x4d3e = await fetch(_0x7a6b);
+    if (!_0x4d3e['ok']) throw new Error('Fetch failed');
+    
+    const _0x2a1f = await _0x4d3e['text']();
+    _0x1a2b['value'] = _0x2a1f['trim']();
+    
+    if (!localStorage['getItem']('verificationTime')) {
+      setVerifiedFor24Hours();
     }
     
     startRemainingTimerDisplay();
     
-    status.textContent = 'Key loaded!';
-    status.className = 'status show';
-    setTimeout(() => { status.className = 'status'; }, 3000);
-  } catch (err) {
-    console.error(err);
-    keyInput.value = 'Failed to load key';
-    status.textContent = 'Error loading key. Try reloading the page.';
-    status.className = 'status show error';
+    _0x3c4d['textContent'] = 'Key loaded!';
+    _0x3c4d['className'] = 'status show';
+    setTimeout(() => {
+      _0x3c4d['className'] = 'status';
+    }, 3000);
+  } catch (_0xdead) {
+    console['error'](_0xdead);
+    _0x1a2b['value'] = 'Failed to load key';
+    _0x3c4d['textContent'] = 'Error loading key. Try reloading the page.';
+    _0x3c4d['className'] = 'status show error';
   }
 }
 
@@ -488,7 +499,7 @@ function getRemainingTime() {
     const saved = localStorage.getItem('verificationTime');
     if (!saved) return null;
     const elapsed = Date.now() - parseInt(saved);
-    const max = 24 * 60 * 60 * 1000; // 24 horas
+    const max = 24 * 60 * 60 * 1000; 
     if (elapsed > max) {
         localStorage.removeItem('verificationTime');
         return null;
@@ -543,9 +554,16 @@ function startRemainingTimerDisplay() {
   for (let i = 0; i < 100; i++) {
     const star = document.createElement('div');
     star.className = 'star';
-    star.style.left = Math.random() * 100 + '%';
-    star.style.top = Math.random() * 100 + '%';
-    star.style.width = star.style.height = (Math.random() * 3 + 5) + 'px'; 
+
+
+    function setRandomPosition() {
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+    }
+    setRandomPosition();
+
+    star.style.width = star.style.height = (Math.random() * 3 + 5) + 'px';
+
 
     const minColor = [122, 82, 201];
     const maxColor = [179, 140, 255];
@@ -557,10 +575,15 @@ function startRemainingTimerDisplay() {
     const b = randomBetween(minColor[2], maxColor[2]);
     star.style.backgroundColor = `rgb(${r},${g},${b})`;
 
-    const delay = Math.random() * 5; 
+    const delay = Math.random() * 5;
     star.style.animationDelay = `${delay}s`;
-    star.style.animationIterationCount = 'infinite'; 
+    star.style.animationIterationCount = 'infinite';
     star.style.animationTimingFunction = 'ease-in-out';
+
+
+    star.addEventListener('animationiteration', () => {
+      setRandomPosition();
+    });
 
     container.appendChild(star);
   }
