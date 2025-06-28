@@ -10,6 +10,9 @@
       width: 100%; height: 100%; overflow: hidden;
       font-family: 'Poppins', sans-serif;
       background: #0e001f; color: #eee;
+      user-select: none;
+      -webkit-user-drag: none;
+      overscroll-behavior: none;
     }canvas {
   position: fixed; top: 0; left: 0;
   width: 100vw; height: 100vh;
@@ -42,8 +45,11 @@ nav a:hover {
 
 main {
   overflow-y: auto;
+  overflow-x: hidden;
   height: 100vh;
   scroll-behavior: smooth;
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
 }
 
 section {
@@ -108,6 +114,10 @@ footer {
   padding: 20px;
   max-width: 100%;
   scroll-snap-type: x mandatory;
+  user-select: none;
+  -webkit-user-drag: none;
+  overscroll-behavior: none;
+  scrollbar-width: thin;
 }
 
 .feature-box {
