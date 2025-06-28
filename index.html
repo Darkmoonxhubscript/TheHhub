@@ -13,10 +13,11 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a0d2e 50%, #2d1b69 100%);
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0d2e 25%, #2d1b47 50%, #1a0d2e 75%, #0a0a0a 100%);
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+            color: white;
         }
 
         /* Animated starfield background */
@@ -34,15 +35,15 @@
             position: absolute;
             background: white;
             border-radius: 50%;
-            animation: twinkle 3s infinite;
+            animation: twinkle 3s infinite ease-in-out;
         }
 
         .star:nth-child(odd) {
-            animation-delay: 1s;
+            animation-delay: 1.5s;
         }
 
         .star:nth-child(3n) {
-            animation-delay: 2s;
+            animation-delay: 0.5s;
         }
 
         @keyframes twinkle {
@@ -69,46 +70,179 @@
             animation: moveStars 8s linear infinite;
         }
 
+        /* Floating nebulas */
+        .nebula {
+            position: fixed;
+            border-radius: 50%;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 2;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .nebula1 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.4) 0%, transparent 70%);
+            top: 10%;
+            left: 70%;
+            animation-delay: 0s;
+        }
+
+        .nebula2 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, transparent 70%);
+            top: 60%;
+            left: 5%;
+            animation-delay: -10s;
+        }
+
+        .nebula3 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(126, 34, 206, 0.2) 0%, transparent 70%);
+            top: 30%;
+            left: -15%;
+            animation-delay: -5s;
+        }
+
         /* Floating moons */
         .moon {
             position: fixed;
             border-radius: 50%;
-            background: linear-gradient(135deg, #8b5cf6, #a855f7);
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+            background: linear-gradient(135deg, #e5e7eb 0%, #9ca3af 100%);
+            box-shadow: inset -20px -10px 0 rgba(0, 0, 0, 0.3), 0 0 40px rgba(229, 231, 235, 0.3);
             animation: float 6s ease-in-out infinite;
-            z-index: 2;
+            z-index: 4;
         }
 
         .moon1 {
-            width: 60px;
-            height: 60px;
-            top: 20%;
-            right: 10%;
+            width: 80px;
+            height: 80px;
+            top: 50px;
+            right: 100px;
             animation-delay: 0s;
         }
 
         .moon2 {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             top: 60%;
             left: 15%;
             animation-delay: 2s;
         }
 
         .moon3 {
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
             top: 80%;
             right: 20%;
             animation-delay: 4s;
         }
 
+        /* Moon craters */
+        .moon1::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 25px;
+            width: 12px;
+            height: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+        }
+
+        .moon1::after {
+            content: '';
+            position: absolute;
+            top: 45px;
+            left: 50px;
+            width: 8px;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 50%;
+        }
+
         @keyframes float {
             0%, 100% {
-                transform: translateY(0px) rotate(0deg);
+                transform: translateY(0px) translateX(0px) rotate(0deg);
             }
-            50% {
-                transform: translateY(-20px) rotate(180deg);
+            33% {
+                transform: translateY(-30px) translateX(20px) rotate(120deg);
+            }
+            66% {
+                transform: translateY(15px) translateX(-15px) rotate(240deg);
+            }
+        }
+
+        /* UFO Animation */
+        .ufo {
+            position: fixed;
+            width: 60px;
+            height: 30px;
+            background: linear-gradient(45deg, #a855f7, #7c3aed);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            top: 15%;
+            left: -70px;
+            z-index: 3;
+            animation: ufoFly 30s infinite linear;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+        }
+
+        .ufo::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 15px;
+            width: 30px;
+            height: 15px;
+            background: #9333ea;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(147, 51, 234, 0.8);
+        }
+
+        .ufo::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 10px;
+            width: 40px;
+            height: 5px;
+            background: rgba(168, 85, 247, 0.3);
+            border-radius: 50%;
+            filter: blur(2px);
+        }
+
+        @keyframes ufoFly {
+            0% { left: -70px; top: 15%; }
+            25% { left: 25%; top: 10%; }
+            50% { left: 50%; top: 20%; }
+            75% { left: 75%; top: 5%; }
+            100% { left: calc(100% + 70px); top: 15%; }
+        }
+
+        /* Shooting stars */
+        .shooting-star-effect {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            z-index: 5;
+            animation: shoot 3s linear infinite;
+        }
+
+        @keyframes shoot {
+            0% {
+                transform: translateX(0) translateY(0);
+                opacity: 1;
+                box-shadow: 0 0 0 0 white;
+            }
+            100% {
+                transform: translateX(300px) translateY(300px);
+                opacity: 0;
+                box-shadow: -300px -300px 0 -2px white;
             }
         }
 
@@ -122,58 +256,93 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            animation: containerSlideIn 1.5s ease-out;
+        }
+
+        @keyframes containerSlideIn {
+            0% { opacity: 0; transform: translateY(50px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         /* Animated entrance */
         .main-card {
-            background: rgba(139, 92, 246, 0.1);
+            background: rgba(30, 27, 75, 0.3);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(139, 92, 246, 0.3);
+            border: 2px solid rgba(168, 85, 247, 0.5);
             border-radius: 20px;
             padding: 40px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 50px rgba(168, 85, 247, 0.2);
             animation: slideInUp 1s ease-out;
             max-width: 500px;
             width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #a855f7, #d946ef, #9333ea, #7c3aed);
+            border-radius: 20px;
+            z-index: -1;
+            animation: borderRotate 8s linear infinite;
+        }
+
+        @keyframes borderRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         @keyframes slideInUp {
             from {
                 opacity: 0;
-                transform: translateY(50px);
+                transform: translateY(50px) scale(0.9);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
         .logo {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: bold;
-            background: linear-gradient(135deg, #8b5cf6, #ec4899, #06b6d4);
+            background: linear-gradient(45deg, #a855f7, #d946ef, #9333ea);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
             animation: glow 2s ease-in-out infinite alternate;
+            text-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
         }
 
         @keyframes glow {
             from {
-                filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.5));
+                filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.6));
+                transform: scale(1);
             }
             to {
-                filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.8));
+                filter: drop-shadow(0 0 25px rgba(139, 92, 246, 0.9));
+                transform: scale(1.02);
             }
         }
 
         .subtitle {
-            color: #a855f7;
-            font-size: 1.2rem;
+            color: #c4b5fd;
+            font-size: 1.4rem;
             margin-bottom: 30px;
             opacity: 0.9;
+            animation: subtitleGlow 2s infinite ease-in-out;
+        }
+
+        @keyframes subtitleGlow {
+            0%, 100% { text-shadow: 0 0 10px rgba(196, 181, 253, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(196, 181, 253, 0.8); }
         }
 
         .key-section {
@@ -182,28 +351,45 @@
 
         .key-label {
             color: #e5e7eb;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             margin-bottom: 15px;
             font-weight: 500;
+            animation: labelFloat 2s ease-out 0.5s both;
+        }
+
+        @keyframes labelFloat {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         .key-container {
             position: relative;
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(139, 92, 246, 0.4);
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(168, 85, 247, 0.3);
             border-radius: 12px;
-            padding: 15px;
+            padding: 20px;
             margin-bottom: 20px;
             transition: all 0.3s ease;
+            animation: keyContainerGlow 3s infinite ease-in-out;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes keyContainerGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(168, 85, 247, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(168, 85, 247, 0.6); }
         }
 
         .key-container:hover {
             border-color: rgba(139, 92, 246, 0.8);
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+            transform: translateY(-2px);
         }
 
         .key-display {
-            color: #06b6d4;
+            color: #e879f9;
             font-family: 'Courier New', monospace;
             font-size: 1.1rem;
             font-weight: bold;
@@ -227,27 +413,27 @@
         }
 
         .copy-btn {
-            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            background: linear-gradient(45deg, #7c3aed, #a855f7);
             color: white;
             border: none;
-            padding: 12px 30px;
+            padding: 15px 35px;
             border-radius: 50px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+            box-shadow: 0 5px 20px rgba(139, 92, 246, 0.4);
             position: relative;
             overflow: hidden;
         }
 
         .copy-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.6);
         }
 
         .copy-btn:active {
-            transform: translateY(0);
+            transform: translateY(-1px);
         }
 
         .copy-btn::before {
@@ -266,11 +452,18 @@
         }
 
         .success-message {
-            color: #10b981;
-            font-weight: 500;
+            color: #34d399;
+            font-weight: 600;
             margin-top: 15px;
             opacity: 0;
             transition: opacity 0.3s ease;
+            animation: successBounce 0.6s ease-out;
+        }
+
+        @keyframes successBounce {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .success-message.show {
@@ -278,9 +471,10 @@
         }
 
         .error-message {
-            color: #ef4444;
+            color: #f87171;
             font-weight: 500;
             margin-top: 15px;
+            font-size: 0.9rem;
         }
 
         .footer {
@@ -288,8 +482,51 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.6);
             font-size: 0.9rem;
+            z-index: 10;
+            animation: footerFade 2s ease-out 2s both;
+        }
+
+        @keyframes footerFade {
+            0% { opacity: 0; }
+            100% { opacity: 0.6; }
+        }
+
+        /* Manual input fallback */
+        .manual-input {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(168, 85, 247, 0.5);
+            border-radius: 8px;
+            color: #e879f9;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .manual-input::placeholder {
+            color: rgba(232, 121, 249, 0.5);
+        }
+
+        .manual-input:focus {
+            outline: none;
+            border-color: rgba(168, 85, 247, 0.8);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+        }
+
+        .pastebin-link {
+            color: #a855f7;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .pastebin-link:hover {
+            color: #d946ef;
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
         }
 
         /* Responsive design */
@@ -300,11 +537,19 @@
             }
             
             .logo {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             
             .moon1, .moon2, .moon3 {
-                display: none;
+                transform: scale(0.7);
+            }
+            
+            .ufo {
+                transform: scale(0.8);
+            }
+            
+            .nebula1, .nebula2, .nebula3 {
+                transform: scale(0.6);
             }
         }
     </style>
@@ -312,6 +557,14 @@
 <body>
     <!-- Animated starfield -->
     <div class="stars" id="stars"></div>
+    
+    <!-- Floating nebulas -->
+    <div class="nebula nebula1"></div>
+    <div class="nebula nebula2"></div>
+    <div class="nebula nebula3"></div>
+    
+    <!-- UFO -->
+    <div class="ufo"></div>
     
     <!-- Floating moons -->
     <div class="moon moon1"></div>
@@ -324,14 +577,18 @@
             <p class="subtitle">by DarkMoonHub</p>
             
             <div class="key-section">
-                <div class="key-label">Your Script Key:</div>
+                <div class="key-label">🔑 Your Script Key:</div>
                 <div class="key-container">
-                    <div class="key-display" id="keyDisplay">Loading...</div>
+                    <div class="key-display" id="keyDisplay">
+                        <span class="loading">🌙 Loading key from the cosmos...</span>
+                    </div>
                 </div>
-                <button class="copy-btn" id="copyBtn" onclick="copyKey()">
-                    📋 Copy Key
+                <button class="copy-btn" id="copyBtn" onclick="copyKey()" disabled>
+                    🚀 Copy Key to Clipboard
                 </button>
-                <div class="success-message" id="successMsg">Key copied to clipboard! ✨</div>
+                <div class="success-message" id="successMsg">
+                    ✨ Key copied successfully! Ready to launch! 🌟
+                </div>
                 <div class="error-message" id="errorMsg" style="display: none;"></div>
             </div>
         </div>
@@ -347,7 +604,7 @@
         // Create animated stars
         function createStars() {
             const starsContainer = document.getElementById('stars');
-            const numStars = 100;
+            const numStars = 200;
 
             for (let i = 0; i < numStars; i++) {
                 const star = document.createElement('div');
@@ -362,8 +619,12 @@
                 star.style.width = size + 'px';
                 star.style.height = size + 'px';
                 
-                // Some stars move
-                if (Math.random() > 0.8) {
+                // Random animation delay
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                
+                // Some stars move as shooting stars
+                if (Math.random() > 0.85) {
                     star.classList.add('shooting-star');
                     star.style.animationDelay = Math.random() * 8 + 's';
                 }
@@ -372,97 +633,259 @@
             }
         }
 
-        // Fetch key from Pastebin
+        // Create periodic shooting stars
+        function createShootingStars() {
+            setInterval(() => {
+                if (Math.random() < 0.3) {
+                    const shootingStar = document.createElement('div');
+                    shootingStar.className = 'shooting-star-effect';
+                    shootingStar.style.left = Math.random() * 100 + '%';
+                    shootingStar.style.top = Math.random() * 50 + '%';
+                    shootingStar.style.animationDelay = '0s';
+                    shootingStar.style.animationDuration = (Math.random() * 2 + 1) + 's';
+                    document.body.appendChild(shootingStar);
+                    
+                    setTimeout(() => {
+                        if (shootingStar.parentNode) {
+                            shootingStar.parentNode.removeChild(shootingStar);
+                        }
+                    }, 3000);
+                }
+            }, 3000);
+        }
+
+        // Fetch key from Pastebin with multiple fallback methods
         async function fetchKey() {
             const keyDisplay = document.getElementById('keyDisplay');
             const errorMsg = document.getElementById('errorMsg');
+            const copyBtn = document.getElementById('copyBtn');
             
             try {
-                keyDisplay.innerHTML = '<span class="loading">Loading key...</span>';
+                // Add loading animation
+                let dots = 0;
+                const loadingInterval = setInterval(() => {
+                    dots = (dots + 1) % 4;
+                    keyDisplay.innerHTML = '<span class="loading">🌙 Loading key from the cosmos' + '.'.repeat(dots) + '</span>';
+                }, 500);
+
+                // Try multiple CORS proxies
+                const proxies = [
+                    'https://api.allorigins.win/raw?url=',
+                    'https://api.codetabs.com/v1/proxy?quest=',
+                    'https://cors-anywhere.herokuapp.com/'
+                ];
                 
-                // Use a CORS proxy to fetch from Pastebin
-                const proxyUrl = 'https://api.allorigins.win/raw?url=';
-                const targetUrl = 'https://pastebin.com/raw/7pLagAZE';
+                const pastebinUrl = 'https://pastebin.com/raw/7pLagAZE';
+                let keyData = '';
                 
-                const response = await fetch(proxyUrl + encodeURIComponent(targetUrl));
-                
-                if (!response.ok) {
-                    throw new Error('Failed to fetch key');
+                // Try direct fetch first
+                try {
+                    const directResponse = await fetch(pastebinUrl);
+                    if (directResponse.ok) {
+                        keyData = await directResponse.text();
+                    }
+                } catch (e) {
+                    console.log('Direct fetch failed, trying proxies...');
                 }
                 
-                const key = await response.text();
-                currentKey = key.trim();
+                // If direct fetch failed, try proxies
+                if (!keyData) {
+                    for (const proxy of proxies) {
+                        try {
+                            const proxyUrl = proxy + encodeURIComponent(pastebinUrl);
+                            const response = await fetch(proxyUrl);
+                            if (response.ok) {
+                                keyData = await response.text();
+                                break;
+                            }
+                        } catch (e) {
+                            continue;
+                        }
+                    }
+                }
                 
-                if (currentKey) {
+                clearInterval(loadingInterval);
+                
+                // Handle results
+                if (keyData && keyData.trim()) {
+                    currentKey = keyData.trim();
                     keyDisplay.textContent = currentKey;
+                    copyBtn.disabled = false;
                     errorMsg.style.display = 'none';
                 } else {
-                    throw new Error('Empty key received');
+                    throw new Error('Failed to fetch key from all sources');
                 }
                 
             } catch (error) {
                 console.error('Error fetching key:', error);
-                keyDisplay.textContent = 'BlockEditorProOnTop';
+                clearInterval(loadingInterval);
+                
+                // Show manual fallback
+                keyDisplay.innerHTML = `
+                    🔮 Auto-fetch blocked by CORS<br>
+                    📋 Visit: <a href="https://pastebin.com/raw/7pLagAZE" target="_blank" class="pastebin-link">Get Key Manually</a><br>
+                    <br>Or paste your key here:
+                `;
+                
+                // Create manual input field
+                const manualInput = document.createElement('input');
+                manualInput.type = 'text';
+                manualInput.placeholder = 'Paste your key here...';
+                manualInput.className = 'manual-input';
+                
+                manualInput.addEventListener('input', function() {
+                    const inputKey = this.value.trim();
+                    if (inputKey) {
+                        currentKey = inputKey;
+                        copyBtn.disabled = false;
+                        errorMsg.style.display = 'none';
+                    }
+                });
+                
+                // Insert input after the key display
+                keyDisplay.parentNode.insertBefore(manualInput, copyBtn);
+                
+                // Use fallback key
                 currentKey = 'BlockEditorProOnTop';
-                errorMsg.textContent = 'Using fallback key (fetch failed)';
+                copyBtn.disabled = false;
+                errorMsg.textContent = '⚠️ Using fallback key. Get latest from link above.';
                 errorMsg.style.display = 'block';
             }
         }
 
-        // Copy key to clipboard
+        // Copy key to clipboard with enhanced feedback
         async function copyKey() {
             const successMsg = document.getElementById('successMsg');
             const copyBtn = document.getElementById('copyBtn');
             
             if (!currentKey) {
-                currentKey = document.getElementById('keyDisplay').textContent;
+                const manualInput = document.querySelector('.manual-input');
+                if (manualInput && manualInput.value.trim()) {
+                    currentKey = manualInput.value.trim();
+                } else {
+                    currentKey = 'BlockEditorProOnTop';
+                }
             }
             
             try {
                 await navigator.clipboard.writeText(currentKey);
                 
-                // Show success animation
+                // Success animation
                 successMsg.classList.add('show');
-                copyBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-                copyBtn.innerHTML = '✅ Copied!';
+                copyBtn.style.background = 'linear-gradient(45deg, #10b981, #059669)';
+                copyBtn.innerHTML = '✅ Copied Successfully!';
                 
-                // Reset after 2 seconds
+                // Add particle effect
+                createCopyParticles();
+                
+                // Reset after 3 seconds
                 setTimeout(() => {
                     successMsg.classList.remove('show');
-                    copyBtn.style.background = 'linear-gradient(135deg, #8b5cf6, #a855f7)';
-                    copyBtn.innerHTML = '📋 Copy Key';
-                }, 2000);
+                    copyBtn.style.background = 'linear-gradient(45deg, #7c3aed, #a855f7)';
+                    copyBtn.innerHTML = '🚀 Copy Key to Clipboard';
+                }, 3000);
                 
             } catch (err) {
                 // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = currentKey;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                
-                successMsg.classList.add('show');
-                setTimeout(() => successMsg.classList.remove('show'), 2000);
+                try {
+                    const textArea = document.createElement('textarea');
+                    textArea.value = currentKey;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    
+                    successMsg.classList.add('show');
+                    setTimeout(() => successMsg.classList.remove('show'), 3000);
+                } catch (fallbackErr) {
+                    alert('Unable to copy automatically. Please select and copy the key manually.');
+                }
             }
         }
+
+        // Create particle effect when copying
+        function createCopyParticles() {
+            const btn = document.getElementById('copyBtn');
+            const rect = btn.getBoundingClientRect();
+            
+            for (let i = 0; i < 10; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: fixed;
+                    left: ${rect.left + rect.width/2}px;
+                    top: ${rect.top + rect.height/2}px;
+                    width: 4px;
+                    height: 4px;
+                    background: #34d399;
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 1000;
+                    animation: particle ${1 + Math.random()}s ease-out forwards;
+                `;
+                
+                const angle = (Math.PI * 2 * i) / 10;
+                const distance = 50 + Math.random() * 30;
+                particle.style.setProperty('--x', Math.cos(angle) * distance + 'px');
+                particle.style.setProperty('--y', Math.sin(angle) * distance + 'px');
+                
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1500);
+            }
+        }
+
+        // Add particle animation CSS
+        const particleStyle = document.createElement('style');
+        particleStyle.textContent = `
+            @keyframes particle {
+                0% { 
+                    transform: translate(0, 0) scale(1);
+                    opacity: 1;
+                }
+                100% { 
+                    transform: translate(var(--x), var(--y)) scale(0);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(particleStyle);
 
         // Initialize everything
         window.addEventListener('load', () => {
             createStars();
+            createShootingStars();
             fetchKey();
         });
 
-        // Add some interactive effects
+        // Add subtle mouse interaction with background elements  
         document.addEventListener('mousemove', (e) => {
             const moons = document.querySelectorAll('.moon');
+            const nebulas = document.querySelectorAll('.nebula');
+            
             moons.forEach((moon, index) => {
-                const speed = (index + 1) * 0.01;
-                const x = e.clientX * speed;
-                const y = e.clientY * speed;
+                const speed = (index + 1) * 0.005;
+                const x = (e.clientX - window.innerWidth / 2) * speed;
+                const y = (e.clientY - window.innerHeight / 2) * speed;
                 moon.style.transform += ` translate(${x}px, ${y}px)`;
             });
+            
+            nebulas.forEach((nebula, index) => {
+                const speed = (index + 1) * 0.002;
+                const x = (e.clientX - window.innerWidth / 2) * speed;
+                const y = (e.clientY - window.innerHeight / 2) * speed;
+                nebula.style.transform += ` translate(${x}px, ${y}px)`;
+            });
         });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'c' && currentKey) {
+                e.preventDefault();
+                copyKey();
+            }
+        });
+
+        // Auto-refresh key every 10 minutes
+        setInterval(fetchKey, 600000);
     </script>
 </body>
 </html>
