@@ -448,40 +448,40 @@ function clearTimerStart() {
 
     
 async function fetchKey() {
-const keyInput = document.getElementById('keyInput');
-const status = document.getElementById('status');
-
-try {
-keyInput.placeholder = 'Loading...';
-status.textContent = 'Fetching key...';
-status.className = 'status show loading';
-
-const encoded = "aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3LzdwTGFnQVpF";  
-const decodedURL = atob(encoded);  
-const proxyURL = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(decodedURL);  
+  const keyInput = document.getElementById('keyInput');
+  const status = document.getElementById('status');
   
-const response = await fetch(proxyURL);  
-if (!response.ok) throw new Error('Fetch failed');  
-  
-const text = await response.text();  
-keyInput.value = text.trim();  
-  
-if (!localStorage.getItem('verificationTime')) {  
-  setVerifiedFor24Hours();   
-}  
-  
-startRemainingTimerDisplay();  
-  
-status.textContent = 'Key loaded!';  
-status.className = 'status show';  
-setTimeout(() => { status.className = 'status'; }, 3000);
-
-} catch (err) {
-console.error(err);
-keyInput.value = 'Failed to load key';
-status.textContent = 'Error loading key. Try reloading the page.';
-status.className = 'status show error';
-}
+  try {
+    keyInput.placeholder = 'Loading...';
+    status.textContent = 'Fetching key...';
+    status.className = 'status show loading';
+    
+    const encoded = "aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3LzhMa25zTTM0";
+    const decodedURL = atob(encoded);
+    const proxyURL = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(decodedURL);
+    
+    const response = await fetch(proxyURL);
+    if (!response.ok) throw new Error('Fetch failed');
+    
+    const text = await response.text();
+    keyInput.value = text.trim();
+    
+    if (!localStorage.getItem('verificationTime')) {
+      setVerifiedFor24Hours();
+    }
+    
+    startRemainingTimerDisplay();
+    
+    status.textContent = 'Key loaded!';
+    status.className = 'status show';
+    setTimeout(() => { status.className = 'status'; }, 3000);
+    
+  } catch (err) {
+    console.error(err);
+    keyInput.value = 'Failed to load key';
+    status.textContent = 'Error loading key. Try reloading the page.';
+    status.className = 'status show error';
+  }
 }
 
 
