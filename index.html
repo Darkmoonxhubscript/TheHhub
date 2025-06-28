@@ -1,269 +1,468 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DarkMoonHub — Block Editor Pro Key</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      width: 100%; height: 100%; overflow: hidden;
-      font-family: 'Poppins', sans-serif;
-      background: #0e001f; color: #eee;
-      user-select: none;
-      -webkit-user-drag: none;
-      overscroll-behavior: none;
-    }canvas {
-  position: fixed; top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  z-index: -1;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Block Editor Pro - DarkMoonHub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-header {
-  background: rgba(25, 0, 60, 0.7);
-  padding: 20px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed; width: 100%;
-  top: 0; left: 0;
-  z-index: 10;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0d2e 50%, #2d1b69 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-nav a {
-  margin-left: 20px;
-  color: #eee;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s;
-}
+        /* Animated starfield background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
 
-nav a:hover {
-  color: #8a2be2;
-}
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
 
-main {
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 100vh;
-  scroll-behavior: smooth;
-  -ms-touch-action: pan-y;
-  touch-action: pan-y;
-}
+        .star:nth-child(odd) {
+            animation-delay: 1s;
+        }
 
-section {
-  padding: 100px 20px;
-  text-align: center;
-  min-height: 100vh;
-}
+        .star:nth-child(3n) {
+            animation-delay: 2s;
+        }
 
-#home {
-  margin-top: 100px;
-}
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
 
-.container {
-  background: rgba(32, 0, 64, 0.85);
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 50px;
-  border-radius: 20px;
-  box-shadow: 0 0 40px rgba(138, 43, 226, 0.7);
-  animation: fadeIn 1s ease-out forwards;
-  transform: scale(0.8);
-  opacity: 0;
-}
+        @keyframes moveStars {
+            from {
+                transform: translateY(0px);
+            }
+            to {
+                transform: translateY(-100vh);
+            }
+        }
 
-@keyframes fadeIn {
-  to { opacity: 1; transform: scale(1); }
-}
+        .shooting-star {
+            animation: moveStars 8s linear infinite;
+        }
 
-input, button {
-  width: 100%; padding: 15px; margin-bottom: 15px;
-  border-radius: 10px; border: none;
-  font-size: 1.1em;
-}
+        /* Floating moons */
+        .moon {
+            position: fixed;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+            animation: float 6s ease-in-out infinite;
+            z-index: 2;
+        }
 
-input {
-  background: rgba(0, 0, 0, 0.4);
-  color: #fff;
-}
+        .moon1 {
+            width: 60px;
+            height: 60px;
+            top: 20%;
+            right: 10%;
+            animation-delay: 0s;
+        }
 
-button {
-  background: #8a2be2;
-  color: white;
-  cursor: pointer;
-  transition: background 0.3s;
-}
+        .moon2 {
+            width: 40px;
+            height: 40px;
+            top: 60%;
+            left: 15%;
+            animation-delay: 2s;
+        }
 
-button:hover {
-  background: #6b1bbb;
-}
+        .moon3 {
+            width: 30px;
+            height: 30px;
+            top: 80%;
+            right: 20%;
+            animation-delay: 4s;
+        }
 
-footer {
-  background: rgba(15, 0, 40, 0.9);
-  padding: 40px 20px;
-  text-align: center;
-  color: #aaa;
-}
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
 
-.feature-scroll {
-  display: flex;
-  overflow-x: auto;
-  gap: 20px;
-  padding: 20px;
-  max-width: 100%;
-  scroll-snap-type: x mandatory;
-  user-select: none;
-  -webkit-user-drag: none;
-  overscroll-behavior: none;
-  scrollbar-width: thin;
-}
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-.feature-box {
-  flex: 0 0 auto;
-  width: 300px;
-  background: rgba(138, 43, 226, 0.2);
-  padding: 20px;
-  border-radius: 12px;
-  scroll-snap-align: start;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-}
+        /* Animated entrance */
+        .main-card {
+            background: rgba(139, 92, 246, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+            animation: slideInUp 1s ease-out;
+            max-width: 500px;
+            width: 100%;
+        }
 
-.feature-box h3 {
-  color: #fff;
-  margin-bottom: 10px;
-}
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-.feature-box p {
-  color: #ccc;
-}
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899, #06b6d4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
 
-  </style>
+        @keyframes glow {
+            from {
+                filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.5));
+            }
+            to {
+                filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.8));
+            }
+        }
+
+        .subtitle {
+            color: #a855f7;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .key-section {
+            margin: 30px 0;
+        }
+
+        .key-label {
+            color: #e5e7eb;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .key-container {
+            position: relative;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(139, 92, 246, 0.4);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .key-container:hover {
+            border-color: rgba(139, 92, 246, 0.8);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+
+        .key-display {
+            color: #06b6d4;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            word-break: break-all;
+            min-height: 24px;
+            user-select: all;
+        }
+
+        .loading {
+            color: #8b5cf6;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.6);
+        }
+
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+
+        .copy-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .copy-btn:hover::before {
+            left: 100%;
+        }
+
+        .success-message {
+            color: #10b981;
+            font-weight: 500;
+            margin-top: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .success-message.show {
+            opacity: 1;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-weight: 500;
+            margin-top: 15px;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .main-card {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .moon1, .moon2, .moon3 {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
-  <canvas id="stars"></canvas>
-  <header>
-    <h2>DarkMoonHub</h2>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#features">Features</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>  <main>
-    <section id="home">
-      <div class="container">
-        <h1>Welcome to Block Editor Pro</h1>
-        <p>Get your exclusive key below:</p>
-        <input id="keyInput" readonly placeholder="Loading key..." />
-        <button id="copyBtn" disabled>Copy Key</button>
-        <div class="msg" id="msg"></div>
-      </div>
-    </section><section id="about">
-  <h2>About</h2>
-  <p>Block Editor Pro is a powerful Roblox build system by DarkMoonHub. You can place, resize, and manage parts with style and precision.</p>
-</section>
+    <!-- Animated starfield -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- Floating moons -->
+    <div class="moon moon1"></div>
+    <div class="moon moon2"></div>
+    <div class="moon moon3"></div>
 
-<section id="features">
-  <h2>Features</h2>
-  <div class="feature-scroll">
-    <div class="feature-box">
-      <h3>Live Part Manipulation</h3>
-      <p>Move, resize, and rotate blocks directly in-game using intuitive controls.</p>
+    <div class="container">
+        <div class="main-card">
+            <h1 class="logo">Block Editor Pro</h1>
+            <p class="subtitle">by DarkMoonHub</p>
+            
+            <div class="key-section">
+                <div class="key-label">Your Script Key:</div>
+                <div class="key-container">
+                    <div class="key-display" id="keyDisplay">Loading...</div>
+                </div>
+                <button class="copy-btn" id="copyBtn" onclick="copyKey()">
+                    📋 Copy Key
+                </button>
+                <div class="success-message" id="successMsg">Key copied to clipboard! ✨</div>
+                <div class="error-message" id="errorMsg" style="display: none;"></div>
+            </div>
+        </div>
     </div>
-    <div class="feature-box">
-      <h3>Snap-to-Grid</h3>
-      <p>Precise alignment with grid-based snapping for professional builds.</p>
+
+    <div class="footer">
+        Made with 💜 by DarkMoonHub
     </div>
-    <div class="feature-box">
-      <h3>Secure Key System</h3>
-      <p>Only verified users can access the editor using a key-based unlock system.</p>
-    </div>
-    <div class="feature-box">
-      <h3>Modern UI</h3>
-      <p>Clean and responsive user interface that fits any device.</p>
-    </div>
-  </div>
-</section>
 
-<section id="contact">
-  <h2>Contact</h2>
-  <p>Email: darkmoonhub@example.com</p>
-  <p>GitHub: <a href="https://github.com" target="_blank">github.com/DarkMoonHub</a></p>
-</section>
+    <script>
+        let currentKey = '';
 
-<footer>
-  <p>&copy; 2025 DarkMoonHub. All rights reserved.</p>
-</footer>
+        // Create animated stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numStars = 100;
 
-  </main>  <script>
-    const keyInput = document.getElementById('keyInput');
-    const copyBtn = document.getElementById('copyBtn');
-    const msg = document.getElementById('msg');
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Random position
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                
+                // Random size
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                
+                // Some stars move
+                if (Math.random() > 0.8) {
+                    star.classList.add('shooting-star');
+                    star.style.animationDelay = Math.random() * 8 + 's';
+                }
+                
+                starsContainer.appendChild(star);
+            }
+        }
 
-    async function fetchKey() {
-      try {
-        const resp = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://pastebin.com/raw/7pLagAZE'));
-        if (!resp.ok) throw new Error('HTTP ' + resp.status);
-        const text = await resp.text();
-        const key = text.split('\n')[0].trim();
-        if (!key) throw new Error('Empty key');
-        keyInput.value = key;
-        copyBtn.disabled = false;
-      } catch (e) {
-        keyInput.placeholder = 'Unable to load key';
-      }
-    }
+        // Fetch key from Pastebin
+        async function fetchKey() {
+            const keyDisplay = document.getElementById('keyDisplay');
+            const errorMsg = document.getElementById('errorMsg');
+            
+            try {
+                keyDisplay.innerHTML = '<span class="loading">Loading key...</span>';
+                
+                // Use a CORS proxy to fetch from Pastebin
+                const proxyUrl = 'https://api.allorigins.win/raw?url=';
+                const targetUrl = 'https://pastebin.com/raw/7pLagAZE';
+                
+                const response = await fetch(proxyUrl + encodeURIComponent(targetUrl));
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch key');
+                }
+                
+                const key = await response.text();
+                currentKey = key.trim();
+                
+                if (currentKey) {
+                    keyDisplay.textContent = currentKey;
+                    errorMsg.style.display = 'none';
+                } else {
+                    throw new Error('Empty key received');
+                }
+                
+            } catch (error) {
+                console.error('Error fetching key:', error);
+                keyDisplay.textContent = 'BlockEditorProOnTop';
+                currentKey = 'BlockEditorProOnTop';
+                errorMsg.textContent = 'Using fallback key (fetch failed)';
+                errorMsg.style.display = 'block';
+            }
+        }
 
-    copyBtn.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(keyInput.value);
-        msg.textContent = 'Copied!';
-      } catch {
-        msg.textContent = 'Copy failed!';
-      }
-      setTimeout(() => msg.textContent = '', 3000);
-    });
+        // Copy key to clipboard
+        async function copyKey() {
+            const successMsg = document.getElementById('successMsg');
+            const copyBtn = document.getElementById('copyBtn');
+            
+            if (!currentKey) {
+                currentKey = document.getElementById('keyDisplay').textContent;
+            }
+            
+            try {
+                await navigator.clipboard.writeText(currentKey);
+                
+                // Show success animation
+                successMsg.classList.add('show');
+                copyBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                copyBtn.innerHTML = '✅ Copied!';
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    successMsg.classList.remove('show');
+                    copyBtn.style.background = 'linear-gradient(135deg, #8b5cf6, #a855f7)';
+                    copyBtn.innerHTML = '📋 Copy Key';
+                }, 2000);
+                
+            } catch (err) {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = currentKey;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                successMsg.classList.add('show');
+                setTimeout(() => successMsg.classList.remove('show'), 2000);
+            }
+        }
 
-    fetchKey();
+        // Initialize everything
+        window.addEventListener('load', () => {
+            createStars();
+            fetchKey();
+        });
 
-    const canvas = document.getElementById('stars');
-    const ctx = canvas.getContext('2d');
-    let stars = [];
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    window.addEventListener('resize', resize);
-    resize();
-
-    for (let i = 0; i < 300; i++) {
-      stars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 1.5 + 0.5,
-        d: Math.random() * 0.5
-      });
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = 'white';
-      stars.forEach(s => {
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fill();
-        s.x += Math.cos(s.d * 2) * 0.2;
-        s.y += Math.sin(s.d * 2) * 0.2;
-        if (s.x > canvas.width) s.x = 0;
-        if (s.x < 0) s.x = canvas.width;
-        if (s.y > canvas.height) s.y = 0;
-        if (s.y < 0) s.y = canvas.height;
-      });
-      requestAnimationFrame(animate);
-    }
-    animate();
-  </script></body>
+        // Add some interactive effects
+        document.addEventListener('mousemove', (e) => {
+            const moons = document.querySelectorAll('.moon');
+            moons.forEach((moon, index) => {
+                const speed = (index + 1) * 0.01;
+                const x = e.clientX * speed;
+                const y = e.clientY * speed;
+                moon.style.transform += ` translate(${x}px, ${y}px)`;
+            });
+        });
+    </script>
+</body>
 </html>
