@@ -35,7 +35,7 @@
     }
     .star:nth-child(odd) { animation-duration: 3s; }
     .star:nth-child(even) { animation-duration: 2.5s; }
-    @keyframes twinkle {
+    @keyframes twinkle {rgba(24, 26, 40, 1)
       0%, 100% { opacity: 0.3; transform: scale(1); }
       50% { opacity: 1; transform: scale(1.2); }
     }
@@ -473,19 +473,8 @@ function startRemainingTimerDisplay() {
         }
     }, 1000);
 }
-
-    window.addEventListener('load', () => {
-    createStars();
-    createParticles();
-    updateProgress();
-
-    const remaining = getRemainingTime();
-    if (remaining) {
-        showAccessStepImmediately();
-        startRemainingTimerDisplay();
-    }
-});
-
+</script>
+  <script>
     function createStars() {
       const container = document.getElementById('stars');
       for (let i = 0; i < 100; i++) {
@@ -498,6 +487,23 @@ function startRemainingTimerDisplay() {
         container.appendChild(star);
       }
     }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      createStars();
+
+      const remaining = getRemainingTime();
+      if (remaining) {
+        document.querySelectorAll('.verification-step').forEach(e => e.classList.remove('active'));
+        document.getElementById('step5').classList.add('active');
+        document.getElementById('progressFill').style.width = '100%';
+
+        fetchKey();
+        startRemainingTimerDisplay();
+      } else {
+        document.getElementById('step1').classList.add('active');
+        document.getElementById('progressFill').style.width = '20%';
+      }
+    });
   </script>
 </body>
 </html>
