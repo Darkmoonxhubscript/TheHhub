@@ -270,7 +270,7 @@ body {
     <div class="verification-step" id="step3">
       <div class="step-title">Security Timer</div>
       <div class="step-description">Please wait a moment</div>
-      <div class="timer" id="timer">15 seconds remaining</div>
+      <div class="timer" id="timer">60 seconds remaining</div>
       <button class="btn" id="timerBtn" onclick="nextStep(3)" disabled>Wait...</button>
     </div>
 
@@ -393,16 +393,16 @@ function clearTimerStart() {
 }
 
     function nextStep(step) {
-      if (step === 1) generateCaptcha();
-      if (step === 2) startTimer();
-      if (step === 3) clearInterval(timerInterval);
-      if (step === 4) fetchKey();
-      document.getElementById(`step${currentStep}`).classList.remove('active');
-      currentStep = step + 1;
-      document.getElementById(`step${currentStep}`).classList.add('active');
-      document.getElementById('progressFill').style.width = (currentStep / 5) * 100 + '%';
-    }
-
+  if (step === 1) generateCaptcha();
+  if (step === 2) startTimer();
+  if (step === 3) clearInterval(timerInterval);
+  if (step === 4) fetchKey();
+  
+  document.getElementById(`step${step}`).classList.remove('active');
+  currentStep = step + 1;
+  document.getElementById(`step${currentStep}`).classList.add('active');
+  document.getElementById('progressFill').style.width = (currentStep / 5) * 100 + '%';
+}
     
 async function fetchKey() {
   const keyInput = document.getElementById('keyInput');
