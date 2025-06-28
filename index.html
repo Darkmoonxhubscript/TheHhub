@@ -1,251 +1,451 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Block Editor Pro - Key System</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #1a0d2e 0%, #16213e 50%, #0f3460 100%);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Block Editor Pro - Key System</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1a0d2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
     }
 
     .stars {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        pointer-events: none;
-        z-index: 0;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
     }
 
     .star {
-        position: absolute;
-        background: white;
-        border-radius: 50%;
-        animation: twinkle 2s infinite;
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 2s infinite;
     }
 
     .star:nth-child(odd) { animation-duration: 3s; }
     .star:nth-child(even) { animation-duration: 2.5s; }
 
     @keyframes twinkle {
-        0%, 100% { opacity: 0.3; transform: scale(1); }
-        50% { opacity: 1; transform: scale(1.2); }
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
     }
 
     .container {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(20px);
-        border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        padding: 40px;
-        max-width: 500px;
-        width: 90%;
-        text-align: center;
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-        z-index: 1;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 40px;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 1;
     }
 
     .title {
-        color: #e1c3ff;
-        font-size: 2.5rem;
-        margin-bottom: 10px;
+      color: #e1c3ff;
+      font-size: 2.5rem;
+      font-weight: 300;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px rgba(225, 195, 255, 0.5);
     }
 
     .subtitle {
-        color: #b794f6;
-        font-size: 1rem;
-        margin-bottom: 30px;
+      color: #b794f6;
+      font-size: 1rem;
+      margin-bottom: 30px;
+      opacity: 0.8;
     }
 
-    .verification-step { display: none; animation: fadeIn 0.5s ease; }
-    .verification-step.active { display: block; }
+    .verification-step {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .verification-step.active {
+      display: block;
+    }
 
     @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .step-title { color: #e1c3ff; font-size: 1.5rem; margin-bottom: 20px; }
-    .step-description { color: #b794f6; margin-bottom: 25px; }
+    .step-title {
+      color: #e1c3ff;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .step-description {
+      color: #b794f6;
+      margin-bottom: 25px;
+      opacity: 0.9;
+    }
 
     .btn {
-        width: 100%; padding: 15px;
-        background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);
-        border: none; border-radius: 12px;
-        color: white; font-size: 1.1rem; cursor: pointer;
-        transition: all 0.3s ease; margin-bottom: 15px;
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 25px rgba(159, 122, 234, 0.4);
+      margin-bottom: 15px;
     }
 
-    .btn:hover { transform: translateY(-2px); }
-    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .btn-success { background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(159, 122, 234, 0.6);
+    }
 
-    .timer {
-        color: #fbb03b;
-        font-size: 1.1rem;
-        font-weight: 500;
-        margin-bottom: 10px;
-        margin-top: -10px;
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+      box-shadow: 0 10px 25px rgba(72, 187, 120, 0.4);
+    }
+
+    .captcha-container {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      border: 2px solid rgba(183, 148, 246, 0.3);
+    }
+
+    .captcha-question {
+      color: #e1c3ff;
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    .captcha-input {
+      width: 100%;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(183, 148, 246, 0.3);
+      border-radius: 8px;
+      color: white;
+      font-size: 1rem;
+      outline: none;
+      text-align: center;
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px 0;
+      cursor: pointer;
+    }
+
+    .checkbox {
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(183, 148, 246, 0.5);
+      border-radius: 4px;
+      margin-right: 12px;
+      position: relative;
+    }
+
+    .checkbox.checked {
+      background: #9f7aea;
+      border-color: #9f7aea;
+    }
+
+    .checkbox.checked::after {
+      content: '✓';
+      position: absolute;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .checkbox-label {
+      color: #b794f6;
+      font-size: 0.9rem;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #9f7aea, #805ad5);
+      border-radius: 3px;
+      transition: width 0.5s ease;
+      width: 0%;
     }
 
     .key-input {
-        width: 100%; padding: 15px 20px;
-        background: rgba(255, 255, 255, 0.1);
-        border: 2px solid rgba(183, 148, 246, 0.3);
-        border-radius: 12px;
-        color: white; font-size: 1rem;
-        margin-bottom: 20px;
+      width: 100%;
+      padding: 15px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(183, 148, 246, 0.3);
+      border-radius: 12px;
+      color: white;
+      font-size: 1rem;
+      outline: none;
+      margin-bottom: 20px;
     }
 
     .status {
-        margin-top: 15px;
-        font-size: 0.9rem;
-        opacity: 0;
-        transition: opacity 0.3s ease;
+      margin-top: 15px;
+      color: #68d391;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
     .status.show { opacity: 1; }
     .status.error { color: #fc8181; }
     .status.loading { color: #fbb03b; }
-</style>
 
+    .timer {
+      color: #fbb03b;
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
-    <div class="stars" id="stars"></div>
-    <div class="container">
-        <h1 class="title">Block Editor Pro</h1>
-        <p class="subtitle">Key System</p><div class="verification-step active" id="step3">
-        <div class="step-title">Security Check</div>
-        <div class="step-description">Please wait to proceed</div>
-        <div class="timer" id="timer">15 seconds remaining</div>
-        <button class="btn" id="timerBtn" onclick="nextStep(3)" disabled>Wait...</button>
+  <div class="stars" id="stars"></div>
+
+  <div class="container">
+    <h1 class="title">Block Editor Pro</h1>
+    <p class="subtitle">Key System by DarkMoonHub</p>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="verification-step active" id="step1">
+      <div class="step-title">Human Verification</div>
+      <div class="step-description">Confirm you're not a robot</div>
+      <div class="checkbox-container" onclick="toggleHumanCheck()">
+        <div class="checkbox" id="humanCheck"></div>
+        <span class="checkbox-label">I am not a robot</span>
+      </div>
+      <button class="btn" id="humanBtn" onclick="nextStep(1)" disabled>Continue</button>
+    </div>
+
+    <div class="verification-step" id="step2">
+      <div class="step-title">CAPTCHA</div>
+      <div class="step-description">Solve the math question</div>
+      <div class="captcha-container">
+        <div class="captcha-question" id="captchaQuestion">Loading...</div>
+        <input type="number" class="captcha-input" id="captchaInput" placeholder="Enter your answer">
+      </div>
+      <button class="btn" onclick="verifyCaptcha()">Verify</button>
+      <button class="btn" onclick="generateCaptcha()">New Question</button>
+    </div>
+
+    <div class="verification-step" id="step3">
+      <div class="step-title">Security Wait</div>
+      <div class="step-description">Please wait before continuing</div>
+      <div class="timer" id="timer">15 seconds remaining</div>
+      <button class="btn" id="timerBtn" onclick="nextStep(3)" disabled>Wait...</button>
     </div>
 
     <div class="verification-step" id="step4">
-        <div class="step-title">Access Key</div>
-        <div class="step-description">Block Editor Pro key</div>
-        <input type="text" class="key-input" id="keyInput" placeholder="Loading key..." readonly>
-        <button class="btn btn-success" onclick="copyKey()">
-            <span id="copyBtnText">Copy Key</span>
-        </button>
+      <div class="step-title">Final Confirmation</div>
+      <div class="step-description">Accept the terms to continue</div>
+      <div class="checkbox-container" onclick="toggleTermsCheck()">
+        <div class="checkbox" id="termsCheck"></div>
+        <span class="checkbox-label">I accept the terms of use</span>
+      </div>
+      <button class="btn" id="termsBtn" onclick="nextStep(4)" disabled>Access Key</button>
+    </div>
+
+    <div class="verification-step" id="step5">
+      <div class="step-title">Your Access Key</div>
+      <div class="step-description">This is your Block Editor Pro Key</div>
+      <input type="text" class="key-input" id="keyInput" placeholder="Loading key..." readonly>
+      <button class="btn btn-success" onclick="copyKey()">
+        <span id="copyBtnText">Copy Key</span>
+      </button>
     </div>
 
     <div class="status" id="status"></div>
-</div>
+  </div>
 
-<script>
-    let currentStep = 3;
-    let timerInterval;
+  <script>
+    let currentStep = 1, captchaAnswer = 0, humanVerified = false, termsAccepted = false, timerInterval;
+
+    function toggleHumanCheck() {
+      const cb = document.getElementById('humanCheck');
+      const btn = document.getElementById('humanBtn');
+      humanVerified = !humanVerified;
+      cb.classList.toggle('checked');
+      btn.disabled = !humanVerified;
+    }
+
+    function toggleTermsCheck() {
+      const cb = document.getElementById('termsCheck');
+      const btn = document.getElementById('termsBtn');
+      termsAccepted = !termsAccepted;
+      cb.classList.toggle('checked');
+      btn.disabled = !termsAccepted;
+    }
 
     function nextStep(step) {
-        if (step === 3) fetchKey();
-        document.getElementById(`step${currentStep}`).classList.remove('active');
-        currentStep = step + 1;
-        document.getElementById(`step${currentStep}`).classList.add('active');
+      if (step === 2 && currentStep === 1) generateCaptcha();
+      else if (step === 3 && currentStep === 2) startTimer();
+      else if (step === 4 && currentStep === 3) clearInterval(timerInterval);
+      else if (step === 5 && currentStep === 4) fetchKey();
+
+      document.getElementById(`step${currentStep}`).classList.remove('active');
+      currentStep = step + 1;
+      document.getElementById(`step${currentStep}`).classList.add('active');
+      document.getElementById('progressFill').style.width = (currentStep / 5) * 100 + '%';
+    }
+
+    function generateCaptcha() {
+      const n1 = Math.floor(Math.random() * 10) + 1;
+      const n2 = Math.floor(Math.random() * 10) + 1;
+      const ops = ['+', '-', '*'];
+      const op = ops[Math.floor(Math.random() * ops.length)];
+      document.getElementById('captchaQuestion').textContent = `${n1} ${op} ${n2} = ?`;
+      captchaAnswer = eval(n1 + op + n2);
+      document.getElementById('captchaInput').value = '';
+    }
+
+    function verifyCaptcha() {
+      const val = parseInt(document.getElementById('captchaInput').value);
+      const status = document.getElementById('status');
+      if (val === captchaAnswer) {
+        status.textContent = 'Correct!';
+        status.className = 'status show';
+        setTimeout(() => { nextStep(2); status.className = 'status'; }, 1000);
+      } else {
+        status.textContent = 'Wrong answer. Try again.';
+        status.className = 'status show error';
+        generateCaptcha();
+        setTimeout(() => status.className = 'status', 2000);
+      }
     }
 
     function startTimer() {
-        let timeLeft = 15;
-        const timerElement = document.getElementById('timer');
-        const btn = document.getElementById('timerBtn');
-
-        timerInterval = setInterval(() => {
-            timeLeft--;
-            timerElement.textContent = `${timeLeft} seconds remaining`;
-
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                timerElement.textContent = 'Verification complete!';
-                btn.disabled = false;
-                btn.textContent = 'Continue';
-                btn.classList.add('btn-success');
-            }
-        }, 1000);
+      let timeLeft = 15;
+      const timer = document.getElementById('timer');
+      const btn = document.getElementById('timerBtn');
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timer.textContent = `${timeLeft} seconds remaining`;
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          timer.textContent = 'Done!';
+          btn.disabled = false;
+          btn.textContent = 'Continue';
+          btn.classList.add('btn-success');
+        }
+      }, 1000);
     }
 
     async function fetchKey() {
-        const keyInput = document.getElementById('keyInput');
-        const status = document.getElementById('status');
+      const keyInput = document.getElementById('keyInput');
+      const status = document.getElementById('status');
+      try {
+        keyInput.placeholder = 'Loading...';
+        status.textContent = 'Fetching key...';
+        status.className = 'status show loading';
 
-        try {
-            keyInput.placeholder = 'Loading...';
-            status.textContent = 'Fetching key...';
-            status.className = 'status show loading';
-
-            const encoded = "aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3LzdwTGFnQVpF";
-            const decodedURL = atob(encoded);
-            const proxyURL = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(decodedURL);
-
-            const response = await fetch(proxyURL);
-            if (!response.ok) throw new Error('Fetch failed');
-
-            const text = await response.text();
-            keyInput.value = text.trim();
-
-            status.textContent = 'Key loaded!';
-            status.className = 'status show';
-            setTimeout(() => { status.className = 'status'; }, 3000);
-        } catch (err) {
-            console.error(err);
-            keyInput.value = 'Failed to load key';
-            status.textContent = 'Error loading key. Try again.';
-            status.className = 'status show error';
-        }
+        const encoded = "aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3LzdwTGFnQVpF";
+        const realURL = atob(encoded);
+        const proxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(realURL);
+        const res = await fetch(proxy);
+        if (!res.ok) throw new Error();
+        const text = await res.text();
+        keyInput.value = text.trim();
+        status.textContent = 'Key loaded!';
+        status.className = 'status show';
+        setTimeout(() => status.className = 'status', 3000);
+      } catch (err) {
+        keyInput.value = 'Failed to load key';
+        status.textContent = 'Error loading. Try again.';
+        status.className = 'status show error';
+      }
     }
 
     async function copyKey() {
-        const keyInput = document.getElementById('keyInput');
-        const copyBtnText = document.getElementById('copyBtnText');
-        const status = document.getElementById('status');
-
-        if (!keyInput.value || keyInput.value.includes('Failed')) {
-            status.textContent = 'No valid key to copy!';
-            status.className = 'status show error';
-            setTimeout(() => status.className = 'status', 2000);
-            return;
-        }
-
-        try {
-            await navigator.clipboard.writeText(keyInput.value);
-            copyBtnText.textContent = '✓ Copied!';
-            status.textContent = 'Key copied successfully!';
-            status.className = 'status show';
-            setTimeout(() => {
-                copyBtnText.textContent = 'Copy Key';
-                status.className = 'status';
-            }, 2000);
-        } catch (error) {
-            keyInput.select();
-            document.execCommand('copy');
-            copyBtnText.textContent = '✓ Copied!';
-            status.textContent = 'Key copied!';
-            status.className = 'status show';
-            setTimeout(() => {
-                copyBtnText.textContent = 'Copy Key';
-                status.className = 'status';
-            }, 2000);
-        }
+      const key = document.getElementById('keyInput');
+      const status = document.getElementById('status');
+      const copyText = document.getElementById('copyBtnText');
+      if (!key.value || key.value.includes('Failed')) {
+        status.textContent = 'No valid key to copy.';
+        status.className = 'status show error';
+        return setTimeout(() => status.className = 'status', 2000);
+      }
+      try {
+        await navigator.clipboard.writeText(key.value);
+        copyText.textContent = '✓ Copied!';
+        status.textContent = 'Key copied successfully!';
+        status.className = 'status show';
+        setTimeout(() => {
+          copyText.textContent = 'Copy Key';
+          status.className = 'status';
+        }, 2000);
+      } catch {
+        key.select();
+        document.execCommand('copy');
+      }
     }
 
     window.addEventListener('load', () => {
-        const starsContainer = document.getElementById('stars');
-        for (let i = 0; i < 100; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.width = star.style.height = Math.random() * 3 + 1 + 'px';
-            star.style.animationDelay = Math.random() * 3 + 's';
-            starsContainer.appendChild(star);
-        }
-        startTimer();
+      for (let i = 0; i < 100; i++) {
+        const s = document.createElement('div');
+        s.className = 'star';
+        s.style.left = Math.random() * 100 + '%';
+        s.style.top = Math.random() * 100 + '%';
+        s.style.width = s.style.height = Math.random() * 3 + 1 + 'px';
+        s.style.animationDelay = Math.random() * 3 + 's';
+        document.getElementById('stars').appendChild(s);
+      }
     });
-</script>
 
+    document.getElementById('captchaInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') verifyCaptcha();
+    });
+  </script>
 </body>
 </html>
