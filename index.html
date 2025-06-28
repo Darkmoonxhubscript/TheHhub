@@ -27,12 +27,23 @@
       pointer-events: none;
       z-index: 0;
     }
-    .star {
+    @keyframes appearThenFade {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.star {
   position: absolute;
-  background: #9f7aea; /* roxo clarinho */
   border-radius: 50%;
-  box-shadow: 0 0 5px 2px rgba(255, 255, 255, 1);
-  animation: twinkle 2s infinite, moveStars 10s linear infinite;
+  animation: appearThenFade 5s forwards;
+  box-shadow: 0 0 8px 3px rgba(168, 85, 247, 0.8);
 }
     .star:nth-child(odd) { animation-duration: 3s; }
     .star:nth-child(even) { animation-duration: 2.5s; }
@@ -118,7 +129,7 @@ body {
     color: #fbb03b;
     font-size: 1.1rem;
     font-weight: bold;
-    margin: 5px 0 15px; /* Subiu o texto */
+    margin: 5px 0 15px; 
 }
     .btn:hover {
       transform: translateY(-2px);
@@ -420,7 +431,7 @@ function clearTimerStart() {
     keyInput.value = text.trim();
     
     if (!localStorage.getItem('verificationTime')) {
-      setVerifiedFor24Hours(); // ✅ só salva se ainda não tiver salvo
+      setVerifiedFor24Hours(); 
     }
     
     startRemainingTimerDisplay();
@@ -468,13 +479,11 @@ function clearTimerStart() {
       }
     }
 
-// Salva o timestamp atual (quando a pessoa terminou o processo)
 function setVerifiedFor24Hours() {
     const now = Date.now();
     localStorage.setItem('verificationTime', now.toString());
 }
 
-// Verifica quanto tempo falta
 function getRemainingTime() {
     const saved = localStorage.getItem('verificationTime');
     if (!saved) return null;
@@ -487,7 +496,6 @@ function getRemainingTime() {
     return max - elapsed;
 }
 
-// Converte ms para hh:mm:ss
 function formatRemaining(ms) {
     const h = Math.floor(ms / 3600000);
     const m = Math.floor((ms % 3600000) / 60000);
@@ -495,7 +503,7 @@ function formatRemaining(ms) {
     return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
 }
 
-// Vai direto pro final
+
 function showAccessStepImmediately() {
   const remaining = getRemainingTime();
   if (!remaining) return;
@@ -508,7 +516,6 @@ function showAccessStepImmediately() {
   startRemainingTimerDisplay();
 }
 
-// Mostra tempo restante até expirar
 function startRemainingTimerDisplay() {
   const status = document.getElementById('status');
   
@@ -525,24 +532,40 @@ function startRemainingTimerDisplay() {
     }
   }
   
-  updateTime(); // Atualiza imediatamente ao iniciar
+  updateTime(); 
   
   const interval = setInterval(updateTime, 1000);
 }
 </script>
   <script>
-    function createStars() {
+   function createStars() {
   const container = document.getElementById('stars');
   for (let i = 0; i < 100; i++) {
     const star = document.createElement('div');
     star.className = 'star';
     star.style.left = Math.random() * 100 + '%';
     star.style.top = Math.random() * 100 + '%';
-    star.style.width = star.style.height = (Math.random() * 7 + 5) + 'px'; // gera de 5 até 8 px
-    star.style.animationDelay = Math.random() * 3 + 's';
+    star.style.width = star.style.height = (Math.random() * 3 + 5) + 'px'; 
+
+    const minColor = [122, 82, 201];
+    const maxColor = [179, 140, 255];
+    function randomBetween(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    const r = randomBetween(minColor[0], maxColor[0]);
+    const g = randomBetween(minColor[1], maxColor[1]);
+    const b = randomBetween(minColor[2], maxColor[2]);
+    star.style.backgroundColor = `rgb(${r},${g},${b})`;
+
+    const delay = Math.random() * 5; 
+    star.style.animationDelay = `${delay}s`;
+    star.style.animationIterationCount = 'infinite'; 
+    star.style.animationTimingFunction = 'ease-in-out';
+
     container.appendChild(star);
   }
 }
+
     window.addEventListener('DOMContentLoaded', () => {
   createStars();
   
@@ -559,7 +582,7 @@ function startRemainingTimerDisplay() {
     if (timerStart) {
       document.querySelectorAll('.verification-step').forEach(e => e.classList.remove('active'));
       document.getElementById('step3').classList.add('active');
-      document.getElementById('progressFill').style.width = '60%'; // passo 3
+      document.getElementById('progressFill').style.width = '60%'; 
       startTimer();
     } else {
       document.getElementById('step1').classList.add('active');
