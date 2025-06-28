@@ -7,7 +7,7 @@
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
-      width: 100%; height: 100%; overflow-x: hidden;
+      width: 100%; height: 100%; overflow: hidden;
       font-family: 'Poppins', sans-serif;
       background: #0e001f; color: #eee;
     }canvas {
@@ -38,6 +38,12 @@ nav a {
 
 nav a:hover {
   color: #8a2be2;
+}
+
+main {
+  overflow-y: auto;
+  height: 100vh;
+  scroll-behavior: smooth;
 }
 
 section {
@@ -95,6 +101,34 @@ footer {
   color: #aaa;
 }
 
+.feature-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 20px;
+  max-width: 100%;
+  scroll-snap-type: x mandatory;
+}
+
+.feature-box {
+  flex: 0 0 auto;
+  width: 300px;
+  background: rgba(138, 43, 226, 0.2);
+  padding: 20px;
+  border-radius: 12px;
+  scroll-snap-align: start;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.feature-box h3 {
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.feature-box p {
+  color: #ccc;
+}
+
   </style>
 </head>
 <body>
@@ -107,32 +141,53 @@ footer {
       <a href="#features">Features</a>
       <a href="#contact">Contact</a>
     </nav>
-  </header>  <section id="home">
-    <div class="container">
-      <h1>Welcome to Block Editor Pro</h1>
-      <p>Get your exclusive key below:</p>
-      <input id="keyInput" readonly placeholder="Loading key..." />
-      <button id="copyBtn" disabled>Copy Key</button>
-      <div class="msg" id="msg"></div>
+  </header>  <main>
+    <section id="home">
+      <div class="container">
+        <h1>Welcome to Block Editor Pro</h1>
+        <p>Get your exclusive key below:</p>
+        <input id="keyInput" readonly placeholder="Loading key..." />
+        <button id="copyBtn" disabled>Copy Key</button>
+        <div class="msg" id="msg"></div>
+      </div>
+    </section><section id="about">
+  <h2>About</h2>
+  <p>Block Editor Pro is a powerful Roblox build system by DarkMoonHub. You can place, resize, and manage parts with style and precision.</p>
+</section>
+
+<section id="features">
+  <h2>Features</h2>
+  <div class="feature-scroll">
+    <div class="feature-box">
+      <h3>Live Part Manipulation</h3>
+      <p>Move, resize, and rotate blocks directly in-game using intuitive controls.</p>
     </div>
-  </section>  <section id="about">
-    <h2>About</h2>
-    <p>Block Editor Pro is a powerful Roblox build system by DarkMoonHub. You can place, resize, and manage parts with style and precision.</p>
-  </section>  <section id="features">
-    <h2>Features</h2>
-    <ul style="list-style: none; padding: 0;">
-      <li>✔️ Live part manipulation</li>
-      <li>✔️ Smooth UI interface</li>
-      <li>✔️ Snap-to-grid and resize handles</li>
-      <li>✔️ Secure key system integration</li>
-    </ul>
-  </section>  <section id="contact">
-    <h2>Contact</h2>
-    <p>Email: darkmoonhub@example.com</p>
-    <p>GitHub: <a href="https://github.com" target="_blank">github.com/DarkMoonHub</a></p>
-  </section>  <footer>
-    <p>&copy; 2025 DarkMoonHub. All rights reserved.</p>
-  </footer>  <script>
+    <div class="feature-box">
+      <h3>Snap-to-Grid</h3>
+      <p>Precise alignment with grid-based snapping for professional builds.</p>
+    </div>
+    <div class="feature-box">
+      <h3>Secure Key System</h3>
+      <p>Only verified users can access the editor using a key-based unlock system.</p>
+    </div>
+    <div class="feature-box">
+      <h3>Modern UI</h3>
+      <p>Clean and responsive user interface that fits any device.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <p>Email: darkmoonhub@example.com</p>
+  <p>GitHub: <a href="https://github.com" target="_blank">github.com/DarkMoonHub</a></p>
+</section>
+
+<footer>
+  <p>&copy; 2025 DarkMoonHub. All rights reserved.</p>
+</footer>
+
+  </main>  <script>
     const keyInput = document.getElementById('keyInput');
     const copyBtn = document.getElementById('copyBtn');
     const msg = document.getElementById('msg');
@@ -174,11 +229,11 @@ footer {
     window.addEventListener('resize', resize);
     resize();
 
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < 300; i++) {
       stars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        r: Math.random() * 1.2 + 0.3,
+        r: Math.random() * 1.5 + 0.5,
         d: Math.random() * 0.5
       });
     }
