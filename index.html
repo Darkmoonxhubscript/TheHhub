@@ -102,11 +102,10 @@
       margin-bottom: 15px;
     }
     .timer {
-  color: #fbb03b;
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin-bottom: 10px;
-  margin-top: -10px; /* move levemente para cima */
+    color: #fbb03b;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 5px 0 15px; /* Subiu o texto */
 }
     .btn:hover {
       transform: translateY(-2px);
@@ -371,6 +370,9 @@
     const text = await response.text();
     keyInput.value = text.trim();
     
+    setVerifiedFor24Hours(); // Salva o horário
+startRemainingTimerDisplay(); // Mostra o tempo restante
+    
     status.textContent = 'Key loaded!';
     status.className = 'status show';
     setTimeout(() => { status.className = 'status'; }, 3000);
@@ -414,12 +416,69 @@
       }
     }
 
+// Salva o timestamp atual (quando a pessoa terminou o processo)
+function setVerifiedFor24Hours() {
+    const now = Date.now();
+    localStorage.setItem('verificationTime', now.toString());
+}
+
+// Verifica quanto tempo falta
+function getRemainingTime() {
+    const saved = localStorage.getItem('verificationTime');
+    if (!saved) return null;
+    const elapsed = Date.now() - parseInt(saved);
+    const max = 24 * 60 * 60 * 1000; // 24 horas
+    if (elapsed > max) {
+        localStorage.removeItem('verificationTime');
+        return null;
+    }
+    return max - elapsed;
+}
+
+// Converte ms para hh:mm:ss
+function formatRemaining(ms) {
+    const h = Math.floor(ms / 3600000);
+    const m = Math.floor((ms % 3600000) / 60000);
+    const s = Math.floor((ms % 60000) / 1000);
+    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+}
+
+// Vai direto pro final
+function showAccessStepImmediately() {
+    document.querySelectorAll('.verification-step').forEach(e => e.classList.remove('active'));
+    document.getElementById('step5').classList.add('active');
+    document.getElementById('progressFill').style.width = '100%';
+    fetchKey();
+}
+
+// Mostra tempo restante até expirar
+function startRemainingTimerDisplay() {
+    const status = document.getElementById('status');
+    const interval = setInterval(() => {
+        const remain = getRemainingTime();
+        if (!remain) {
+            status.textContent = 'Verification expired. Please redo the steps.';
+            status.className = 'status show error';
+            clearInterval(interval);
+            setTimeout(() => location.reload(), 3000);
+        } else {
+            status.textContent = 'Valid for: ' + formatRemaining(remain);
+            status.className = 'status show';
+        }
+    }, 1000);
+}
+
     window.addEventListener('load', () => {
-      document.getElementById('captchaInput').addEventListener('keypress', e => {
-        if (e.key === 'Enter') verifyCaptcha();
-      });
-      createStars();
-    });
+    createStars();
+    createParticles();
+    updateProgress();
+
+    const remaining = getRemainingTime();
+    if (remaining) {
+        showAccessStepImmediately();
+        startRemainingTimerDisplay();
+    }
+});
 
     function createStars() {
       const container = document.getElementById('stars');
