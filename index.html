@@ -12,7 +12,7 @@
     }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #1a0d2e 0%, #16213e 50%, #0f3460 100%);
+  background: linear-gradient(180deg, #1a002b 0%, #2e004f 50%, #1c0036 100%);
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -41,15 +41,21 @@
 
 .star {
   position: absolute;
+  background: #b57aff;
   border-radius: 50%;
-  animation: appearThenFade 5s forwards;
-  box-shadow: 0 0 8px 3px rgba(168, 85, 247, 0.8);
+  width: 5px;
+  height: 5px;
+  box-shadow: 0 0 8px 2px #d6aaff;
+  opacity: 0;
+  animation: twinkle 4s infinite;
 }
     .star:nth-child(odd) { animation-duration: 3s; }
     .star:nth-child(even) { animation-duration: 2.5s; }
     @keyframes twinkle {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.2); }
+  0% { opacity: 0; transform: scale(0.8); }
+  25% { opacity: 1; transform: scale(1); }
+  75% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 0; transform: scale(0.8); top: calc(100% * Math.random()); left: calc(100% * Math.random()); }
 }
     .container {
       background: rgba(255,255,255,0.1);
@@ -356,7 +362,7 @@ function getTimerRemaining() {
   const timerStart = localStorage.getItem('timerStart');
   if (!timerStart) return 0;
   const elapsed = (Date.now() - parseInt(timerStart)) / 1000;
-  const total = 15; // duração do timer em segundos
+  const total = 60; 
   const remaining = total - elapsed;
   return remaining > 0 ? remaining : 0;
 }
@@ -411,52 +417,45 @@ function clearTimerStart() {
       document.getElementById('progressFill').style.width = (currentStep / 5) * 100 + '%';
     }
 
-    async function fetchKey() {
-  const _0x1a2b = document['getElementById']('keyInput');
-  const _0x3c4d = document['getElementById']('status');
-  try {
-    _0x1a2b['placeholder'] = 'Loading...';
-    _0x3c4d['textContent'] = 'Fetching key...';
-    _0x3c4d['className'] = 'status show loading';
     
-    const _0x5f6a = ['YUhSMGNEb3ZMM1J2Y21j', 'b0xXNWpiMlJsWTJGc2FHOXpkQzVqYjIwdA=='];
-    
-    function _0x9abc(_0xdef0) {
-      return atob(_0xdef0);
-    }
-    
-    let _0x3456 = '';
-    for (let _0x7f8e = 0; _0x7f8e < _0x5f6a['length']; _0x7f8e++) {
-      _0x3456 += _0x9abc(_0x5f6a[_0x7f8e]);
-    }
-    
-    const _0x8b9c = _0x9abc(_0x3456);
-    const _0x7a6b = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(_0x8b9c);
-    
-    const _0x4d3e = await fetch(_0x7a6b);
-    if (!_0x4d3e['ok']) throw new Error('Fetch failed');
-    
-    const _0x2a1f = await _0x4d3e['text']();
-    _0x1a2b['value'] = _0x2a1f['trim']();
-    
-    if (!localStorage['getItem']('verificationTime')) {
-      setVerifiedFor24Hours();
-    }
-    
-    startRemainingTimerDisplay();
-    
-    _0x3c4d['textContent'] = 'Key loaded!';
-    _0x3c4d['className'] = 'status show';
-    setTimeout(() => {
-      _0x3c4d['className'] = 'status';
-    }, 3000);
-  } catch (_0xdead) {
-    console['error'](_0xdead);
-    _0x1a2b['value'] = 'Failed to load key';
-    _0x3c4d['textContent'] = 'Error loading key. Try reloading the page.';
-    _0x3c4d['className'] = 'status show error';
-  }
+async function fetchKey() {
+const keyInput = document.getElementById('keyInput');
+const status = document.getElementById('status');
+
+try {
+keyInput.placeholder = 'Loading...';
+status.textContent = 'Fetching key...';
+status.className = 'status show loading';
+
+const encoded = "aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3LzdwTGFnQVpF";  
+const decodedURL = atob(encoded);  
+const proxyURL = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(decodedURL);  
+  
+const response = await fetch(proxyURL);  
+if (!response.ok) throw new Error('Fetch failed');  
+  
+const text = await response.text();  
+keyInput.value = text.trim();  
+  
+if (!localStorage.getItem('verificationTime')) {  
+  setVerifiedFor24Hours();   
+}  
+  
+startRemainingTimerDisplay();  
+  
+status.textContent = 'Key loaded!';  
+status.className = 'status show';  
+setTimeout(() => { status.className = 'status'; }, 3000);
+
+} catch (err) {
+console.error(err);
+keyInput.value = 'Failed to load key';
+status.textContent = 'Error loading key. Try reloading the page.';
+status.className = 'status show error';
 }
+}
+
+
 
     async function copyKey() {
       const keyInput = document.getElementById('keyInput');
@@ -551,42 +550,23 @@ function startRemainingTimerDisplay() {
   <script>
    function createStars() {
   const container = document.getElementById('stars');
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 120; i++) {
     const star = document.createElement('div');
     star.className = 'star';
-
-
-    function setRandomPosition() {
-      star.style.left = Math.random() * 100 + '%';
-      star.style.top = Math.random() * 100 + '%';
-    }
-    setRandomPosition();
-
-    star.style.width = star.style.height = (Math.random() * 3 + 5) + 'px';
-
-
-    const minColor = [122, 82, 201];
-    const maxColor = [179, 140, 255];
-    function randomBetween(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-    const r = randomBetween(minColor[0], maxColor[0]);
-    const g = randomBetween(minColor[1], maxColor[1]);
-    const b = randomBetween(minColor[2], maxColor[2]);
-    star.style.backgroundColor = `rgb(${r},${g},${b})`;
-
-    const delay = Math.random() * 5;
-    star.style.animationDelay = `${delay}s`;
-    star.style.animationIterationCount = 'infinite';
-    star.style.animationTimingFunction = 'ease-in-out';
-
-
-    star.addEventListener('animationiteration', () => {
-      setRandomPosition();
-    });
-
+    repositionStar(star);
     container.appendChild(star);
+    
+    setInterval(() => repositionStar(star), 4000); 
   }
+}
+
+function repositionStar(star) {
+  const size = Math.random() * 3 + 5;
+  star.style.width = `${size}px`;
+  star.style.height = `${size}px`;
+  star.style.left = `${Math.random() * 100}%`;
+  star.style.top = `${Math.random() * 100}%`;
+  star.style.animationDelay = `${Math.random() * 4}s`;
 }
 
     window.addEventListener('DOMContentLoaded', () => {
