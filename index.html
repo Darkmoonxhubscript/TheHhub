@@ -28,11 +28,12 @@
       z-index: 0;
     }
     .star {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      animation: twinkle 2s infinite;
-    }
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.9);
+  animation: twinkle 2s infinite, moveStars 10s linear infinite;
+}
     .star:nth-child(odd) { animation-duration: 3s; }
     .star:nth-child(even) { animation-duration: 2.5s; }
     @keyframes twinkle {
@@ -531,18 +532,17 @@ function startRemainingTimerDisplay() {
 </script>
   <script>
     function createStars() {
-      const container = document.getElementById('stars');
-      for (let i = 0; i < 100; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        star.style.width = star.style.height = Math.random() * 3 + 1 + 'px';
-        star.style.animationDelay = Math.random() * 3 + 's';
-        container.appendChild(star);
-      }
-    }
-
+  const container = document.getElementById('stars');
+  for (let i = 0; i < 100; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.width = star.style.height = (Math.random() * 5 + 15) + 'px';
+    star.style.animationDelay = Math.random() * 3 + 's';
+    container.appendChild(star);
+  }
+}
     window.addEventListener('DOMContentLoaded', () => {
   createStars();
   
