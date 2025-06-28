@@ -459,19 +459,24 @@ if (remaining) {
 
 // Mostra tempo restante até expirar
 function startRemainingTimerDisplay() {
-    const status = document.getElementById('status');
-    const interval = setInterval(() => {
-        const remain = getRemainingTime();
-        if (!remain) {
-            status.textContent = 'Verification expired. Please redo the steps.';
-            status.className = 'status show error';
-            clearInterval(interval);
-            setTimeout(() => location.reload(), 3000);
-        } else {
-            status.textContent = 'Valid for: ' + formatRemaining(remain);
-            status.className = 'status show';
-        }
-    }, 1000);
+  const status = document.getElementById('status');
+  
+  function updateTime() {
+    const remain = getRemainingTime();
+    if (!remain) {
+      status.textContent = 'Verification expired. Please redo the steps.';
+      status.className = 'status show error';
+      clearInterval(interval);
+      setTimeout(() => location.reload(), 3000);
+    } else {
+      status.textContent = 'Valid for: ' + formatRemaining(remain);
+      status.className = 'status show';
+    }
+  }
+  
+  updateTime(); // Atualiza imediatamente ao iniciar
+  
+  const interval = setInterval(updateTime, 1000);
 }
 </script>
   <script>
