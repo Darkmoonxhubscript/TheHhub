@@ -320,33 +320,70 @@ body {
     }
 
     function generateCaptcha() {
-      const num1 = Math.floor(Math.random() * 10) + 1;
-      const num2 = Math.floor(Math.random() * 10) + 1;
-      const ops = ['+', '-', '*'];
-      const op = ops[Math.floor(Math.random() * ops.length)];
-      document.getElementById('captchaQuestion').textContent = `${num1} ${op} ${num2} = ?`;
-      captchaAnswer = eval(`${num1}${op}${num2}`);
-      document.getElementById('captchaInput').value = '';
-    }
+  const type = Math.floor(Math.random() * 3);
+  
+  if (type === 0) {
 
-    function verifyCaptcha() {
-      const val = parseInt(document.getElementById('captchaInput').value);
-      const status = document.getElementById('status');
-      if (val === captchaAnswer) {
-        status.textContent = 'Correct!';
-        status.className = 'status show';
-        setTimeout(() => { nextStep(2); status.className = 'status'; }, 1000);
-      } else {
-        status.textContent = 'Wrong answer. Try again.';
-        status.className = 'status show error';
-        generateCaptcha();
-        setTimeout(() => status.className = 'status', 2000);
-      }
+    const num1 = Math.floor(Math.random() * 20) + 5;
+    const num2 = Math.floor(Math.random() * 15) + 2;
+    const num3 = Math.floor(Math.random() * 10) + 1;
+    const ops = ['+', '-', '*', '/'];
+    
+    const op1 = ops[Math.floor(Math.random() * ops.length)];
+    const op2 = ops[Math.floor(Math.random() * ops.length)];
+    
+    let expression = `${num1} ${op1} ${num2}`;
+    if (Math.random() > 0.5) {
+      expression = `${num1} ${op1} ${num2} ${op2} ${num3}`;
     }
     
-    function saveTimerStart() {
-  if (!localStorage.getItem('timerStart')) {
-    localStorage.setItem('timerStart', Date.now().toString());
+    const formatted = expression.replace(new RegExp('/', 'g'), '÷').replace(new RegExp('\\*', 'g'), '×');
+    document.getElementById('captchaQuestion').textContent = `${formatted} = ?`;
+    
+    try {
+      captchaAnswer = Math.floor(eval(expression));
+    } catch {
+      captchaAnswer = 0;
+    }
+    
+  } else {
+
+    const start = Math.floor(Math.random() * 10) + 2;
+    const step = Math.floor(Math.random() * 6) + 2;
+    const sequence = [];
+    for (let i = 0; i < 4; i++) {
+      sequence.push(start + i * step);
+    }
+    document.getElementById('captchaQuestion').textContent = `${sequence.join(', ')}, ?`;
+    captchaAnswer = start + 4 * step;
+  }
+  
+  document.getElementById('captchaInput').value = '';
+}
+
+    function verifyCaptcha() {
+  const val = parseFloat(document.getElementById('captchaInput').value);
+  const status = document.getElementById('status');
+
+  if (isNaN(val)) {
+    status.textContent = 'Enter a valid number.';
+    status.className = 'status show error';
+    setTimeout(() => status.className = 'status', 2000);
+    return;
+  }
+
+  if (Math.abs(val - captchaAnswer) < 0.01) {
+    status.textContent = 'Correct!';
+    status.className = 'status show';
+    setTimeout(() => {
+      nextStep(2);
+      status.className = 'status';
+    }, 1000);
+  } else {
+    status.textContent = 'Wrong answer. Try again.';
+    status.className = 'status show error';
+    generateCaptcha();
+    setTimeout(() => status.className = 'status', 2000);
   }
 }
 
