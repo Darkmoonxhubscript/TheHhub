@@ -319,60 +319,71 @@ body {
       btn.disabled = !termsAccepted;
     }
 
-    function generateCaptcha() {
-  const type = Math.floor(Math.random() * 3);
-  
-  if (type === 0) {
+ 
 
-    const num1 = Math.floor(Math.random() * 20) + 5;
-    const num2 = Math.floor(Math.random() * 15) + 2;
-    const num3 = Math.floor(Math.random() * 10) + 1;
+function generateCaptcha() {
+  const captchaQuestion = document.getElementById('captchaQuestion');
+  const rand = Math.random();
+  
+  if (rand < 0.75) {
+    const useDecimal = Math.random() < 0.3;
+    const numOps = Math.floor(Math.random() * 3) + 1; // 1 a 3 operadores
     const ops = ['+', '-', '*', '/'];
     
-    const op1 = ops[Math.floor(Math.random() * ops.length)];
-    const op2 = ops[Math.floor(Math.random() * ops.length)];
-    
-    let expression = `${num1} ${op1} ${num2}`;
-    if (Math.random() > 0.5) {
-      expression = `${num1} ${op1} ${num2} ${op2} ${num3}`;
+    function getOp() {
+      return ops[Math.floor(Math.random() * ops.length)];
     }
     
-    const formatted = expression.replace(new RegExp('/', 'g'), '÷').replace(new RegExp('\\*', 'g'), '×');
-    document.getElementById('captchaQuestion').textContent = `${formatted} = ?`;
+    let numbers = [];
+    for (let i = 0; i < numOps + 1; i++) {
+      let n = Math.random() * 20 + 1;
+      if (!useDecimal) n = Math.floor(n);
+      else n = +n.toFixed(1);
+      numbers.push(n);
+    }
     
+    let expression = '';
+    for (let i = 0; i < numOps; i++) {
+      expression += numbers[i] + ' ' + getOp() + ' ';
+    }
+    expression += numbers[numOps];
+    
+    let result = 0;
     try {
-      captchaAnswer = Math.floor(eval(expression));
+      result = eval(expression);
+      if (expression.includes('/')) result = +result.toFixed(2);
+      else result = useDecimal ? +result.toFixed(1) : Math.round(result);
     } catch {
-      captchaAnswer = 0;
+      result = 0;
     }
+    captchaAnswer = result;
+    
+    let displayExpr = expression.replace(/\*/g, '×').replace(/\//g, '÷');
+    captchaQuestion.textContent = `${displayExpr} = ?`;
     
   } else {
-
-    const start = Math.floor(Math.random() * 10) + 2;
-    const step = Math.floor(Math.random() * 6) + 2;
-    const sequence = [];
+    const useDecimalSeq = Math.random() < 0.3;
+    let step = useDecimalSeq ? 1.5 : 1;
+    let start = Math.random() * 9 + 1;
+    if (!useDecimalSeq) start = Math.floor(start);
+    else start = +start.toFixed(1);
+    
+    let seq = [];
     for (let i = 0; i < 4; i++) {
-      sequence.push(start + i * step);
+      let val = useDecimalSeq ? +(start + step * i).toFixed(1) : start + step * i;
+      seq.push(val);
     }
-    document.getElementById('captchaQuestion').textContent = `${sequence.join(', ')}, ?`;
-    captchaAnswer = start + 4 * step;
+    captchaAnswer = useDecimalSeq ? +(start + step * 4).toFixed(1) : start + step * 4;
+    captchaQuestion.textContent = seq.join(', ') + ', ?';
   }
   
   document.getElementById('captchaInput').value = '';
 }
 
-    function verifyCaptcha() {
+function verifyCaptcha() {
   const val = parseFloat(document.getElementById('captchaInput').value);
   const status = document.getElementById('status');
-
-  if (isNaN(val)) {
-    status.textContent = 'Enter a valid number.';
-    status.className = 'status show error';
-    setTimeout(() => status.className = 'status', 2000);
-    return;
-  }
-
-  if (Math.abs(val - captchaAnswer) < 0.01) {
+  if (Math.abs(val - captchaAnswer) < 0.001) {
     status.textContent = 'Correct!';
     status.className = 'status show';
     setTimeout(() => {
