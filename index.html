@@ -1,114 +1,173 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DarkMoonHub - Block Editor Pro Key</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-  body {
-    margin:0; padding:0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #4b0082, #8a2be2);
-    color: white;
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-  }
-  .container {
-    background: rgba(75, 0, 130, 0.85);
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 0 30px #8a2be2;
-    max-width: 400px;
-    width: 90%;
-    text-align: center;
-  }
-  h1 {
-    margin-bottom: 20px;
-    font-weight: 700;
-    font-size: 2em;
-    letter-spacing: 2px;
-  }
-  p {
-    font-weight: 400;
-    margin-bottom: 30px;
-  }
-  input {
-    font-size: 1.1em;
-    padding: 15px;
-    width: 100%;
-    border-radius: 10px;
-    border: none;
-    outline: none;
-    margin-bottom: 20px;
-    background: #330066;
-    color: white;
-    letter-spacing: 2px;
-    font-weight: bold;
-  }
-  button {
-    cursor: pointer;
-    background: #7b2ff7;
-    border: none;
-    border-radius: 10px;
-    padding: 15px 0;
-    width: 100%;
-    font-size: 1.2em;
-    font-weight: 700;
-    color: white;
-    letter-spacing: 2px;
-    transition: background-color 0.3s ease;
-  }
-  button:hover {
-    background: #5c23c0;
-  }
-  .msg {
-    margin-top: 15px;
-    font-weight: 600;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DarkMoonHub - Block Editor Pro Key</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      background: rgba(25, 15, 60, 0.9);
+      padding: 40px;
+      border-radius: 15px;
+      color: white;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(138, 43, 226, 0.8);
+      max-width: 400px;
+      width: 90%;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1em;
+      margin-bottom: 30px;
+    }
+
+    input {
+      padding: 15px;
+      width: 100%;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      background: #290066;
+      color: white;
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    button {
+      padding: 15px;
+      width: 100%;
+      background: #8a2be2;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #6b1bbb;
+    }
+
+    .msg {
+      margin-top: 15px;
+      font-size: 0.95em;
+      font-weight: 600;
+      color: #adff2f;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>DarkMoonHub</h1>
-    <p>Block Editor Pro - Sua Key:</p>
-    <input id="keyInput" type="text" readonly placeholder="Carregando key..." />
-    <button id="copyBtn" disabled>Copiar Key</button>
-    <div class="msg" id="msg"></div>
-  </div>
+<canvas id="stars"></canvas>
 
-  <script>
-    const keyInput = document.getElementById('keyInput');
-    const copyBtn = document.getElementById('copyBtn');
-    const msg = document.getElementById('msg');
+<div class="container">
+  <h1>DarkMoonHub</h1>
+  <p>Block Editor Pro Key</p>
+  <input id="keyInput" type="text" readonly placeholder="Loading key..." />
+  <button id="copyBtn" disabled>Copy Key</button>
+  <div class="msg" id="msg"></div>
+</div>
 
-    // Função para copiar
-    copyBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText(keyInput.value).then(() => {
-        msg.textContent = "Key copiada para a área de transferência!";
-        setTimeout(() => { msg.textContent = ""; }, 3000);
-      }).catch(() => {
-        msg.textContent = "Erro ao copiar. Tente manualmente.";
-      });
+<script>
+  const keyInput = document.getElementById('keyInput');
+  const copyBtn = document.getElementById('copyBtn');
+  const msg = document.getElementById('msg');
+
+  fetch("https://pastebin.com/raw/7pLagAZE")
+    .then(res => res.text())
+    .then(key => {
+      keyInput.value = key.trim();
+      copyBtn.disabled = false;
+    })
+    .catch(() => {
+      keyInput.placeholder = "Failed to load key.";
     });
 
-    // Puxa a key do Pastebin
-    fetch('https://pastebin.com/raw/7pLagAZE')
-      .then(response => {
-        if(!response.ok) throw new Error("Erro ao carregar key");
-        return response.text();
-      })
-      .then(text => {
-        // Se tiver mais de uma linha, pega só a primeira (se quiser outra lógica, me fala)
-        let key = text.split('\n')[0].trim();
-        keyInput.value = key;
-        copyBtn.disabled = false;
-      })
-      .catch(() => {
-        keyInput.placeholder = "Não foi possível carregar a key.";
-      });
-  </script>
+  copyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(keyInput.value).then(() => {
+      msg.textContent = "Key copied!";
+      setTimeout(() => msg.textContent = "", 3000);
+    });
+  });
+
+  // background stars animation
+  const canvas = document.getElementById("stars");
+  const ctx = canvas.getContext("2d");
+  let stars = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas();
+
+  for (let i = 0; i < 150; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 1.5,
+      dx: (Math.random() - 0.5) * 0.5,
+      dy: (Math.random() - 0.5) * 0.5
+    });
+  }
+
+  function animateStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#ffffff";
+    stars.forEach(star => {
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      ctx.fill();
+      star.x += star.dx;
+      star.y += star.dy;
+
+      if (star.x < 0 || star.x > canvas.width) star.dx *= -1;
+      if (star.y < 0 || star.y > canvas.height) star.dy *= -1;
+    });
+    requestAnimationFrame(animateStars);
+  }
+
+  animateStars();
+</script>
 </body>
 </html>
