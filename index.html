@@ -5,169 +5,269 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DarkMoonHub — Block Editor Pro Key</title>
   <style>
+    /* 🚀 IMPORT FONT + RESET */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html {
-      width: 100%; height: 100%;
-      font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at bottom, #1a0033, #000);
-      overflow: hidden;
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { width:100%; height:100%; overflow:hidden; }
+
+    /* 🌌 BACKGROUND GRADIENT */
+    body {
+      background: linear-gradient(135deg, #20003f, #4b0050, #1a001f);
+      font-family:'Poppins', sans-serif;
+      position:relative;
+      color:white;
     }
-    canvas {
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -1;
+
+    /* ✨ CANVAS DE ESTRELAS */
+    canvas#stars, canvas#nebula, canvas#ufo {
+      position:absolute;
+      top:0; left:0;
+      width:100%; height:100%;
+      z-index:-1;
     }
+
+    /* 📦 CONTAINER CENTRAL */
     .container {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%) scale(0.8);
-      background: rgba(32, 0, 64, 0.85);
-      padding: 50px;
-      border-radius: 20px;
-      box-shadow: 0 0 40px rgba(138, 43, 226, 0.7);
-      text-align: center;
-      max-width: 400px; width: 90%;
-      opacity: 0;
-      animation: fadeIn 1s ease-out forwards;
+      position:absolute;
+      top:50%; left:50%;
+      transform:translate(-50%,-50%) scale(0.8);
+      background:rgba(32,0,64,0.9);
+      padding:50px;
+      border-radius:20px;
+      box-shadow:0 0 50px rgba(138,43,226,0.8);
+      text-align:center;
+      max-width:450px; width:90%;
+      opacity:0;
+      animation:fadeIn 1.2s ease-out forwards;
     }
+
     @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-      }
+      to { opacity:1; transform:translate(-50%,-50%) scale(1); }
     }
-    h1 {
-      font-size: 2.3em;
-      font-weight: 700;
-      margin-bottom: 15px;
-    }
-    p {
-      font-size: 1em;
-      margin-bottom: 30px;
-      color: #ccc;
-    }
+
+    /* 🎨 TEXTOS */
+    h1 { font-size:2.4em; font-weight:700; margin-bottom:15px; letter-spacing:2px; }
+    p { font-size:1.05em; margin-bottom:30px; color:#ccc; }
+
+    /* 🧩 INPUT DE KEY */
     input {
-      font-size: 1.2em;
-      padding: 15px;
-      width: 100%;
-      border-radius: 12px;
-      border: none;
-      background: rgba(0,0,0,0.4);
-      color: #eee;
-      text-align: center;
-      margin-bottom: 20px;
-      outline: none;
-      transition: background 0.3s ease;
+      font-size:1.2em;
+      padding:15px;
+      width:100%;
+      background:rgba(0,0,0,0.5);
+      border:none;
+      border-radius:12px;
+      color:#eee;
+      text-align:center;
+      margin-bottom:20px;
+      outline:none;
+      transition:background 0.3s;
     }
-    input:focus {
-      background: rgba(0,0,0,0.6);
-    }
+    input:focus { background:rgba(0,0,0,0.7); }
+
+    /* 🌀 BOTÃO */
     button {
-      font-size: 1.2em;
-      padding: 15px;
-      width: 100%;
-      background: #8a2be2;
-      border: none;
-      border-radius: 12px;
-      color: white;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease;
+      font-size:1.2em;
+      padding:15px;
+      width:100%;
+      background:#8a2be2;
+      border:none;
+      border-radius:12px;
+      font-weight:500;
+      cursor:pointer;
+      transition:background 0.3s, transform 0.2s;
     }
     button:hover {
-      background: #6b1bbb;
-      transform: translateY(-2px);
+      background:#6b1bbb;
+      transform:translateY(-3px);
     }
+
+    /* 📝 MENSAGEM DE SUCESSO */
     .msg {
-      margin-top: 18px;
-      font-size: 0.95em;
-      font-weight: 500;
-      color: #adff2f;
-      min-height: 24px;
+      margin-top:18px;
+      font-size:0.95em;
+      min-height:24px;
+      color:#adff2f;
+      font-weight:500;
+    }
+
+    /* 🎉 MENU DECORATIVO */
+    .menu {
+      position:absolute;
+      top:20px;
+      left:50%;
+      transform:translateX(-50%);
+      display:flex;
+      gap:20px;
+    }
+    .menu span {
+      padding:10px 20px;
+      background:rgba(0,0,0,0.4);
+      border-radius:10px;
+      cursor:pointer;
+      transition:background 0.3s;
+      font-weight:500;
+    }
+    .menu span:hover {
+      background:rgba(0,0,0,0.6);
+    }
+
+    /* 💫 RODAPÉ ESTILIZADO */
+    footer {
+      position:absolute;
+      bottom:10px; width:100%;
+      text-align:center;
+      font-size:0.9em;
+      color:#888;
+    }
+    footer a {
+      color:#adff2f;
+      text-decoration:none;
+      font-weight:500;
+    }
+    footer a:hover {
+      text-decoration:underline;
     }
   </style>
 </head>
 <body>
-  <canvas id="starsCanvas"></canvas>
+  <!-- CANVASES -->
+  <canvas id="stars"></canvas>
+  <canvas id="nebula"></canvas>
+  <canvas id="ufo"></canvas>
+
+  <!-- MENU FLUTUANTE -->
+  <div class="menu">
+    <span>Home</span>
+    <span>About</span>
+    <span>Contact</span>
+  </div>
+
+  <!-- CAIXA PRINCIPAL -->
   <div class="container">
     <h1>DarkMoonHub</h1>
-    <p>Here’s your Block Editor Pro key:</p>
+    <p>Your Block Editor Pro Key</p>
     <input id="keyInput" type="text" readonly placeholder="Loading..." />
-    <button id="copyBtn" disabled>Copy Key</button>
+    <button id="copyBtn" disabled>Copy</button>
     <div class="msg" id="msg"></div>
   </div>
 
+  <!-- RODAPÉ -->
+  <footer>
+    Powered by DarkMoonHub • <a href="#">Support</a> • <a href="#">Terms</a>
+  </footer>
+
   <script>
+    // ======== FETCH DA KEY =========
     const keyInput = document.getElementById('keyInput');
     const copyBtn = document.getElementById('copyBtn');
     const msg = document.getElementById('msg');
 
-    async function fetchKey() {
+    async function loadKey() {
       try {
-        const resp = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://pastebin.com/raw/7pLagAZE'));
-        if (!resp.ok) throw new Error('HTTP ' + resp.status);
-        const text = await resp.text();
-        const key = text.split('\n')[0].trim();
-        if (!key) throw new Error('Empty key');
-        keyInput.value = key;
+        const res = await fetch('https://pastebin.com/raw/7pLagAZE');
+        if (!res.ok) throw new Error(res.status);
+        const t = await res.text();
+        const k = t.split('\n')[0].trim();
+        if (!k) throw new Error('empty');
+        keyInput.value = k;
         copyBtn.disabled = false;
-      } catch (e) {
-        console.error(e);
-        keyInput.placeholder = 'Unable to load key';
+      } catch {
+        keyInput.placeholder = 'Failed to load key';
       }
     }
-
-    copyBtn.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(keyInput.value);
-        msg.textContent = "Copied!";
-      } catch {
-        msg.textContent = "Copy failed!";
-      }
-      setTimeout(() => msg.textContent = "", 3000);
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(keyInput.value)
+        .then(()=> msg.textContent='Copied!')
+        .catch(()=> msg.textContent='Failed!');
+      setTimeout(()=> msg.textContent='',3000);
     });
+    loadKey();
 
-    fetchKey();
+    // ======== ANIMAÇÕES DE FUNDO =========
+    const canvStars = document.getElementById('stars');
+    const sCtx = canvStars.getContext('2d');
+    const canvNeb = document.getElementById('nebula');
+    const nCtx = canvNeb.getContext('2d');
+    const canvUfo = document.getElementById('ufo');
+    const uCtx = canvUfo.getContext('2d');
+    let w, h;
 
-    // Starfield animation
-    const canvas = document.getElementById('starsCanvas');
-    const ctx = canvas.getContext('2d');
-    let stars = [];
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
+    function resize() {
+      w = canvStars.width = canvNeb.width = canvUfo.width = window.innerWidth;
+      h = canvStars.height = canvNeb.height = canvUfo.height = window.innerHeight;
+    }
     window.addEventListener('resize', resize);
     resize();
 
-    for (let i = 0; i < 200; i++) {
-      stars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 1.2 + 0.3,
-        d: Math.random() * 0.5
+    // Estrelas
+    const stars = [];
+    for(let i=0;i<300;i++) stars.push({
+      x:Math.random()*w, y:Math.random()*h,
+      r:Math.random()*1.2+0.5,
+      dx:(Math.random()-0.5)*0.3,
+      dy:(Math.random()-0.5)*0.3
+    });
+    function drawStars() {
+      sCtx.clearRect(0,0,w,h);
+      sCtx.fillStyle='white';
+      stars.forEach(s=>{
+        sCtx.beginPath();
+        sCtx.arc(s.x,s.y,s.r,0,Math.PI*2);
+        sCtx.fill();
+        s.x += s.dx; s.y += s.dy;
+        if(s.x<0||s.x>w) s.x = Math.random()*w;
+        if(s.y<0||s.y>h) s.y = Math.random()*h;
       });
     }
 
-    function animate() {
-      ctx.clearRect(0,0,canvas.width, canvas.height);
-      ctx.fillStyle = 'white';
-      stars.forEach(s => {
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
-        ctx.fill();
-        s.x += Math.cos(s.d*2)*0.2;
-        s.y += Math.sin(s.d*2)*0.2;
-        if (s.x > canvas.width) s.x = 0;
-        if (s.x < 0) s.x = canvas.width;
-        if (s.y > canvas.height) s.y = 0;
-        if (s.y < 0) s.y = canvas.height;
-      });
-      requestAnimationFrame(animate);
+    // Nebulosa grande
+    function drawNebula() {
+      const grd = nCtx.createRadialGradient(w/2,h/2,0, w/2,h/2, h/1.2);
+      grd.addColorStop(0, 'rgba(138,43,226,0.2)');
+      grd.addColorStop(1, 'transparent');
+      nCtx.clearRect(0,0,w,h);
+      nCtx.fillStyle = grd;
+      nCtx.fillRect(0,0,w,h);
     }
-    animate();
+
+    // UFO animado
+    let ufo = {x: w + 100, y: h*0.2, dx: -0.4, alpha:0};
+    function drawUfo() {
+      uCtx.clearRect(0,0,w,h);
+      uCtx.save();
+      uCtx.globalAlpha = Math.min(1, ufo.alpha += 0.002);
+      uCtx.beginPath();
+      uCtx.ellipse(ufo.x,ufo.y,60,20,0,0,Math.PI*2);
+      uCtx.fillStyle='rgba(200,200,255,0.6)';
+      uCtx.fill();
+      uCtx.beginPath();
+      uCtx.ellipse(ufo.x,ufo.y+10,40,10,0,0,Math.PI*2);
+      uCtx.fillStyle='rgba(180,180,255,0.9)';
+      uCtx.fill();
+      uCtx.restore();
+      ufo.x += ufo.dx;
+      if(ufo.x < -100) {
+        ufo.x = w+100;
+        ufo.alpha = 0;
+        ufo.y = Math.random()*h*0.3 + h*0.1;
+      }
+    }
+
+    function loop() {
+      drawStars();
+      drawNebula();
+      drawUfo();
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    // 🎉 MENU DECORATIVO (efeito hover)
+    const menuItems = document.querySelectorAll('.menu span');
+    menuItems.forEach(el=> {
+      el.addEventListener('mouseenter', ()=> el.style.color='#adff2f');
+      el.addEventListener('mouseleave', ()=> el.style.color='white');
+    });
   </script>
 </body>
 </html>
