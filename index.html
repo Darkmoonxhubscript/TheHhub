@@ -1,106 +1,138 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DarkMoonHub — Block Editor Pro Key</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html {
-      width: 100%; height: 100%;
+    html, body {
+      width: 100%; height: 100%; overflow-x: hidden;
       font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at bottom, #1a0033, #000);
-      overflow-x: hidden;
-    }
-    canvas {
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -1;
-    }
-    .container {
-      margin-top: 120px;
-      max-width: 400px;
-      width: 90%;
-      margin-left: auto;
-      margin-right: auto;
-      background: rgba(32, 0, 64, 0.85);
-      padding: 50px;
-      border-radius: 20px;
-      box-shadow: 0 0 40px rgba(138, 43, 226, 0.7);
-      text-align: center;
-      opacity: 0;
-      animation: fadeIn 1s ease-out forwards;
-      transform: scale(0.8);
-    }
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-    h1 {
-      font-size: 2.3em;
-      font-weight: 700;
-      margin-bottom: 15px;
-    }
-    p {
-      font-size: 1em;
-      margin-bottom: 30px;
-      color: #ccc;
-    }
-    input {
-      font-size: 1.2em;
-      padding: 15px;
-      width: 100%;
-      border-radius: 12px;
-      border: none;
-      background: rgba(0,0,0,0.4);
-      color: #eee;
-      text-align: center;
-      margin-bottom: 20px;
-      outline: none;
-      transition: background 0.3s ease;
-    }
-    input:focus {
-      background: rgba(0,0,0,0.6);
-    }
-    button {
-      font-size: 1.2em;
-      padding: 15px;
-      width: 100%;
-      background: #8a2be2;
-      border: none;
-      border-radius: 12px;
-      color: white;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease;
-    }
-    button:hover {
-      background: #6b1bbb;
-      transform: translateY(-2px);
-    }
-    .msg {
-      margin-top: 18px;
-      font-size: 0.95em;
-      font-weight: 500;
-      color: #adff2f;
-      min-height: 24px;
-    }
+      background: #0e001f; color: #eee;
+    }canvas {
+  position: fixed; top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  z-index: -1;
+}
+
+header {
+  background: rgba(25, 0, 60, 0.7);
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed; width: 100%;
+  top: 0; left: 0;
+  z-index: 10;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+nav a {
+  margin-left: 20px;
+  color: #eee;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #8a2be2;
+}
+
+section {
+  padding: 100px 20px;
+  text-align: center;
+  min-height: 100vh;
+}
+
+#home {
+  margin-top: 100px;
+}
+
+.container {
+  background: rgba(32, 0, 64, 0.85);
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(138, 43, 226, 0.7);
+  animation: fadeIn 1s ease-out forwards;
+  transform: scale(0.8);
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; transform: scale(1); }
+}
+
+input, button {
+  width: 100%; padding: 15px; margin-bottom: 15px;
+  border-radius: 10px; border: none;
+  font-size: 1.1em;
+}
+
+input {
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+}
+
+button {
+  background: #8a2be2;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #6b1bbb;
+}
+
+footer {
+  background: rgba(15, 0, 40, 0.9);
+  padding: 40px 20px;
+  text-align: center;
+  color: #aaa;
+}
+
   </style>
 </head>
 <body>
-  <canvas id="starsCanvas"></canvas>
-  <div class="container">
-    <h1>DarkMoonHub</h1>
-    <p>Here’s your Block Editor Pro key:</p>
-    <input id="keyInput" type="text" readonly placeholder="Loading..." />
-    <button id="copyBtn" disabled>Copy Key</button>
-    <div class="msg" id="msg"></div>
-  </div>
-
-  <script>
+  <canvas id="stars"></canvas>
+  <header>
+    <h2>DarkMoonHub</h2>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>  <section id="home">
+    <div class="container">
+      <h1>Welcome to Block Editor Pro</h1>
+      <p>Get your exclusive key below:</p>
+      <input id="keyInput" readonly placeholder="Loading key..." />
+      <button id="copyBtn" disabled>Copy Key</button>
+      <div class="msg" id="msg"></div>
+    </div>
+  </section>  <section id="about">
+    <h2>About</h2>
+    <p>Block Editor Pro is a powerful Roblox build system by DarkMoonHub. You can place, resize, and manage parts with style and precision.</p>
+  </section>  <section id="features">
+    <h2>Features</h2>
+    <ul style="list-style: none; padding: 0;">
+      <li>✔️ Live part manipulation</li>
+      <li>✔️ Smooth UI interface</li>
+      <li>✔️ Snap-to-grid and resize handles</li>
+      <li>✔️ Secure key system integration</li>
+    </ul>
+  </section>  <section id="contact">
+    <h2>Contact</h2>
+    <p>Email: darkmoonhub@example.com</p>
+    <p>GitHub: <a href="https://github.com" target="_blank">github.com/DarkMoonHub</a></p>
+  </section>  <footer>
+    <p>&copy; 2025 DarkMoonHub. All rights reserved.</p>
+  </footer>  <script>
     const keyInput = document.getElementById('keyInput');
     const copyBtn = document.getElementById('copyBtn');
     const msg = document.getElementById('msg');
@@ -115,7 +147,6 @@
         keyInput.value = key;
         copyBtn.disabled = false;
       } catch (e) {
-        console.error(e);
         keyInput.placeholder = 'Unable to load key';
       }
     }
@@ -123,16 +154,16 @@
     copyBtn.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(keyInput.value);
-        msg.textContent = "Copied!";
+        msg.textContent = 'Copied!';
       } catch {
-        msg.textContent = "Copy failed!";
+        msg.textContent = 'Copy failed!';
       }
-      setTimeout(() => msg.textContent = "", 3000);
+      setTimeout(() => msg.textContent = '', 3000);
     });
 
     fetchKey();
 
-    const canvas = document.getElementById('starsCanvas');
+    const canvas = document.getElementById('stars');
     const ctx = canvas.getContext('2d');
     let stars = [];
 
@@ -153,14 +184,14 @@
     }
 
     function animate() {
-      ctx.clearRect(0,0,canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = 'white';
       stars.forEach(s => {
         ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
         ctx.fill();
-        s.x += Math.cos(s.d*2)*0.2;
-        s.y += Math.sin(s.d*2)*0.2;
+        s.x += Math.cos(s.d * 2) * 0.2;
+        s.y += Math.sin(s.d * 2) * 0.2;
         if (s.x > canvas.width) s.x = 0;
         if (s.x < 0) s.x = canvas.width;
         if (s.y > canvas.height) s.y = 0;
@@ -169,6 +200,5 @@
       requestAnimationFrame(animate);
     }
     animate();
-  </script>
-</body>
+  </script></body>
 </html>
