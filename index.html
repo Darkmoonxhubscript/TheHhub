@@ -327,7 +327,7 @@ function generateCaptcha() {
   
   if (rand < 0.75) {
     const useDecimal = Math.random() < 0.3;
-    const numOps = Math.floor(Math.random() * 3) + 1; // 1 a 3 operadores
+    const numOps = Math.floor(Math.random() * 3) + 1;
     const ops = ['+', '-', '*', '/'];
     
     function getOp() {
@@ -387,7 +387,7 @@ function verifyCaptcha() {
     status.textContent = 'Correct!';
     status.className = 'status show';
     setTimeout(() => {
-      nextStep(2);
+      nextStep(currentStep);
       status.className = 'status';
     }, 1000);
   } else {
