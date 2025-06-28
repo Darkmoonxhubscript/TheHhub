@@ -494,16 +494,15 @@ function formatRemaining(ms) {
 
 // Vai direto pro final
 function showAccessStepImmediately() {
-    const remaining = getRemainingTime();
-if (remaining) {
-    document.querySelectorAll('.verification-step').forEach(e => e.classList.remove('active'));
-    document.getElementById('step5').classList.add('active');
-    document.getElementById('progressFill').style.width = '100%';
-    
-    fetchKey();
-    startRemainingTimerDisplay();
-}
-    fetchKey();
+  const remaining = getRemainingTime();
+  if (!remaining) return;
+  
+  document.querySelectorAll('.verification-step').forEach(e => e.classList.remove('active'));
+  document.getElementById('step5').classList.add('active');
+  document.getElementById('progressFill').style.width = '100%';
+  
+  fetchKey();
+  startRemainingTimerDisplay();
 }
 
 // Mostra tempo restante até expirar
