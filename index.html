@@ -35,10 +35,10 @@
     }
     .star:nth-child(odd) { animation-duration: 3s; }
     .star:nth-child(even) { animation-duration: 2.5s; }
-    @keyframes twinkle {rgba(24, 26, 40, 1)
-      0%, 100% { opacity: 0.3; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.2); }
-    }
+    @keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
     .container {
       background: rgba(255,255,255,0.1);
       backdrop-filter: blur(20px);
@@ -76,6 +76,17 @@
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    @keyframes moveStars {
+  from { transform: translateY(0); }
+  to { transform: translateY(-20px); }
+}
+.star {
+  animation: twinkle 2s infinite, moveStars 10s linear infinite;
+}
+body {
+  touch-action: none;
+  overscroll-behavior: none;
+}
     .step-title {
       color: #e1c3ff;
       font-size: 1.5rem;
@@ -87,6 +98,7 @@
       margin-bottom: 25px;
       opacity: 0.9;
     }
+    
     .btn {
       width: 100%;
       padding: 15px;
@@ -321,23 +333,60 @@
         setTimeout(() => status.className = 'status', 2000);
       }
     }
+    
+    function saveTimerStart() {
+  if (!localStorage.getItem('timerStart')) {
+    localStorage.setItem('timerStart', Date.now().toString());
+  }
+}
+
+function getTimerRemaining() {
+  const timerStart = localStorage.getItem('timerStart');
+  if (!timerStart) return 0;
+  const elapsed = (Date.now() - parseInt(timerStart)) / 1000;
+  const total = 15; // duração do timer em segundos
+  const remaining = total - elapsed;
+  return remaining > 0 ? remaining : 0;
+}
+
+function clearTimerStart() {
+  localStorage.removeItem('timerStart');
+}
+
 
     function startTimer() {
-      let time = 15;
-      const timer = document.getElementById('timer');
-      const btn = document.getElementById('timerBtn');
-      timerInterval = setInterval(() => {
-        time--;
-        timer.textContent = `${time} seconds remaining`;
-        if (time <= 0) {
-          clearInterval(timerInterval);
-          timer.textContent = 'Time done!';
-          btn.disabled = false;
-          btn.textContent = 'Continue';
-          btn.classList.add('btn-success');
-        }
-      }, 1000);
+  saveTimerStart();
+  let time = getTimerRemaining();
+  const timer = document.getElementById('timer');
+  const btn = document.getElementById('timerBtn');
+  
+  if (time <= 0) {
+    timer.textContent = 'Time done!';
+    btn.disabled = false;
+    btn.textContent = 'Continue';
+    btn.classList.add('btn-success');
+    clearTimerStart();
+    return;
+  }
+  
+  timer.textContent = `${Math.ceil(time)} seconds remaining`;
+  btn.disabled = true;
+  btn.textContent = 'Wait...';
+  
+  timerInterval = setInterval(() => {
+    time -= 1;
+    if (time <= 0) {
+      clearInterval(timerInterval);
+      timer.textContent = 'Time done!';
+      btn.disabled = false;
+      btn.textContent = 'Continue';
+      btn.classList.add('btn-success');
+      clearTimerStart();
+    } else {
+      timer.textContent = `${Math.ceil(time)} seconds remaining`;
     }
+  }, 1000);
+}
 
     function nextStep(step) {
       if (step === 1) generateCaptcha();
@@ -494,21 +543,33 @@ function startRemainingTimerDisplay() {
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      createStars();
-
-      const remaining = getRemainingTime();
-      if (remaining) {
-        document.querySelectorAll('.verification-step').forEach(e => e.classList.remove('active'));
-        document.getElementById('step5').classList.add('active');
-        document.getElementById('progressFill').style.width = '100%';
-
-        fetchKey();
-        startRemainingTimerDisplay();
-      } else {
-        document.getElementById('step1').classList.add('active');
-        document.getElementById('progressFill').style.width = '20%';
-      }
-    });
+  createStars();
+  
+  const remaining = getRemainingTime();
+  if (remaining) {
+    document.querySelectorAll('.verification-step').forEach(e => e.classList.remove('active'));
+    document.getElementById('step5').classList.add('active');
+    document.getElementById('progressFill').style.width = '100%';
+    
+    fetchKey();
+    startRemainingTimerDisplay();
+  } else {
+    const timerStart = localStorage.getItem('timerStart');
+    if (timerStart) {
+      document.querySelectorAll('.verification-step').forEach(e => e.classList.remove('active'));
+      document.getElementById('step3').classList.add('active');
+      document.getElementById('progressFill').style.width = '60%'; // passo 3
+      startTimer();
+    } else {
+      document.getElementById('step1').classList.add('active');
+      document.getElementById('progressFill').style.width = '20%';
+    }
+  }
+});
   </script>
 </body>
+
+<div style="position: fixed; bottom: 10px; font-size: 0.8rem; width: 100%; text-align: center; color: #aaa; z-index: 1;">
+  DarkMoonHub © 2025 - All rights reserved
+</div>
 </html>
