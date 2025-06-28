@@ -41,21 +41,16 @@
 
 .star {
   position: absolute;
-  background: #b57aff;
+  background: white;
   border-radius: 50%;
-  width: 5px;
-  height: 5px;
-  box-shadow: 0 0 8px 2px #d6aaff;
-  opacity: 0;
-  animation: twinkle 4s infinite;
+  box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.7);
+  animation: twinkle 2s infinite;
+  opacity: 0.5;
 }
-    .star:nth-child(odd) { animation-duration: 3s; }
-    .star:nth-child(even) { animation-duration: 2.5s; }
-    @keyframes twinkle {
-  0% { opacity: 0; transform: scale(0.8); }
-  25% { opacity: 1; transform: scale(1); }
-  75% { opacity: 1; transform: scale(1.2); }
-  100% { opacity: 0; transform: scale(0.8); top: calc(100% * Math.random()); left: calc(100% * Math.random()); }
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
 }
     .container {
       background: rgba(255,255,255,0.1);
@@ -94,12 +89,9 @@
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes moveStars {
-  from { transform: translateY(0); }
-  to { transform: translateY(-20px); }
-}
+   
 .star {
-  animation: twinkle 2s infinite, moveStars 10s linear infinite;
+  animation: twinkle 2s infinite;
 }
 body {
   touch-action: none;
@@ -548,29 +540,21 @@ function startRemainingTimerDisplay() {
 }
 </script>
   <script>
-   function createStars() {
+   function createFixedStars(count = 100) {
   const container = document.getElementById('stars');
-  for (let i = 0; i < 120; i++) {
+  for (let i = 0; i < count; i++) {
     const star = document.createElement('div');
     star.className = 'star';
-    repositionStar(star);
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.width = star.style.height = Math.random() * 2 + 1 + 'px';
+    star.style.animationDelay = Math.random() * 2 + 's';
     container.appendChild(star);
-    
-    setInterval(() => repositionStar(star), 4000); 
   }
 }
 
-function repositionStar(star) {
-  const size = Math.random() * 3 + 5;
-  star.style.width = `${size}px`;
-  star.style.height = `${size}px`;
-  star.style.left = `${Math.random() * 100}%`;
-  star.style.top = `${Math.random() * 100}%`;
-  star.style.animationDelay = `${Math.random() * 4}s`;
-}
-
-    window.addEventListener('DOMContentLoaded', () => {
-  createStars();
+window.addEventListener('DOMContentLoaded', () => {
+      createFixedStars(159); 
   
   const remaining = getRemainingTime();
   if (remaining) {
@@ -596,6 +580,94 @@ function repositionStar(star) {
   </script>
 </body>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UFO Animation</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(ellipse at bottom, #1a0d2e, #0f0c29);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    .ufo {
+      position: fixed;
+      width: 40px;
+      height: 20px;
+      background: linear-gradient(90deg, #99f6e4, #3b82f6);
+      border-radius: 50% / 100%;
+      box-shadow: 0 0 10px 3px #3b82f6;
+      filter: drop-shadow(0 0 6px #3b82f6);
+      z-index: 10;
+    }
+
+    .ufo::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      width: 20px;
+      height: 10px;
+      margin-left: -10px;
+      background: radial-gradient(circle at center, #a5f3fc 60%, transparent 90%);
+      border-radius: 50%;
+      filter: drop-shadow(0 0 8px #a5f3fc);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ufo" id="ufo"></div>
+
+  <script>
+    const ufo = document.getElementById('ufo');
+
+    let posX = window.innerWidth / 2 - 20;
+    let posY = window.innerHeight / 2 - 10;
+
+    let velX = 2;
+    let velY = 1.5;
+
+    function moveUFO() {
+      posX += velX;
+      posY += velY;
+
+      const maxX = window.innerWidth - 40;
+      const maxY = window.innerHeight - 20;
+
+      if (posX <= 0 || posX >= maxX) {
+        velX = -velX;
+        posX = Math.min(Math.max(posX, 0), maxX);
+      }
+
+      if (posY <= 0 || posY >= maxY) {
+        velY = -velY;
+        posY = Math.min(Math.max(posY, 0), maxY);
+      }
+
+      ufo.style.left = posX + 'px';
+      ufo.style.top = posY + 'px';
+
+      requestAnimationFrame(moveUFO);
+    }
+
+    moveUFO();
+
+    window.addEventListener('resize', () => {
+      posX = Math.min(posX, window.innerWidth - 40);
+      posY = Math.min(posY, window.innerHeight - 20);
+    });
+  </script>
+
+</body>
+</html>
+<div class="stars" id="stars"></div>
 <div style="position: fixed; bottom: 10px; font-size: 0.8rem; width: 100%; text-align: center; color: #aaa; z-index: 1;">
   DarkMoonHub © 2025 - All rights reserved
 </div>
