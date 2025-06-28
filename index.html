@@ -402,25 +402,27 @@ function clearTimerStart() {
     async function fetchKey() {
   const keyInput = document.getElementById('keyInput');
   const status = document.getElementById('status');
-
+  
   try {
     keyInput.placeholder = 'Loading...';
     status.textContent = 'Fetching key...';
     status.className = 'status show loading';
-
- 
-    const encoded = "aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3LzdwTGFnQVpF"; // base64 of the URL
+    
+    const encoded = "aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3LzdwTGFnQVpF";
     const decodedURL = atob(encoded);
-
     const proxyURL = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(decodedURL);
+    
     const response = await fetch(proxyURL);
     if (!response.ok) throw new Error('Fetch failed');
     
     const text = await response.text();
     keyInput.value = text.trim();
     
-    setVerifiedFor24Hours(); // Salva o horário
-startRemainingTimerDisplay(); // Mostra o tempo restante
+    if (!localStorage.getItem('verificationTime')) {
+      setVerifiedFor24Hours(); // ✅ só salva se ainda não tiver salvo
+    }
+    
+    startRemainingTimerDisplay();
     
     status.textContent = 'Key loaded!';
     status.className = 'status show';
