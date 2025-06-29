@@ -420,47 +420,41 @@ function clearTimerStart() {
   document.getElementById('progressFill').style.width = (currentStep / 5) * 100 + '%';
 }
     
-function getHWIDFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get('hwid') || '';
-}
-
-function toBase64(str) {
-  return btoa(str);
-}
-
 async function fetchKey() {
   const keyInput = document.getElementById('keyInput');
   const status = document.getElementById('status');
-  
+
   try {
     keyInput.placeholder = 'Loading...';
-    status.textContent = 'Fetching key...';
+    status.textContent = 'Processing HWID...';
     status.className = 'status show loading';
-    
-    const hwid = getHWIDFromURL();
-    
+
+    const params = new URLSearchParams(window.location.search);
+    const hwid = params.get("hwid");
+
     if (!hwid) {
-      throw new Error('No HWID parameter found in URL');
+      throw new Error("No HWID provided in URL.");
     }
-    
-    const encodedHWID = toBase64(hwid);
-    keyInput.value = `KEY_${encodedHWID}`;
-    
+
+    const encodedHWID = btoa(hwid); // codifica em Base64
+    const fullKey = `KEY_${encodedHWID}`;
+
+    keyInput.value = fullKey;
+
     if (!localStorage.getItem('verificationTime')) {
       setVerifiedFor24Hours();
     }
-    
+
     startRemainingTimerDisplay();
-    
-    status.textContent = 'Key loaded!';
+
+    status.textContent = 'Key generated!';
     status.className = 'status show';
     setTimeout(() => { status.className = 'status'; }, 3000);
-    
+
   } catch (err) {
     console.error(err);
-    keyInput.value = 'Failed to load key';
-    status.textContent = 'Error loading key. Try reloading the page.';
+    keyInput.value = 'Invalid or missing HWID';
+    status.textContent = 'Error generating key. Make sure the link has ?hwid=...';
     status.className = 'status show error';
   }
 }
@@ -469,12 +463,14 @@ async function copyKey() {
   const keyInput = document.getElementById('keyInput');
   const btnText = document.getElementById('copyBtnText');
   const status = document.getElementById('status');
-  if (!keyInput.value || keyInput.value.includes('Failed')) {
+  
+  if (!keyInput.value || keyInput.value.includes('Invalid')) {
     status.textContent = 'No valid key to copy.';
     status.className = 'status show error';
     setTimeout(() => status.className = 'status', 2000);
     return;
   }
+  
   try {
     await navigator.clipboard.writeText(keyInput.value);
     btnText.textContent = '✓ Copied!';
