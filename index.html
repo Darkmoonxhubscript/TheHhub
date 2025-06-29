@@ -420,6 +420,15 @@ function clearTimerStart() {
   document.getElementById('progressFill').style.width = (currentStep / 5) * 100 + '%';
 }
     
+function getHWIDFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('hwid') || '';
+}
+
+function toBase64(str) {
+  return btoa(str);
+}
+
 async function fetchKey() {
   const keyInput = document.getElementById('keyInput');
   const status = document.getElementById('status');
@@ -429,15 +438,14 @@ async function fetchKey() {
     status.textContent = 'Fetching key...';
     status.className = 'status show loading';
     
-    const encoded = "aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3LzhMa25zTTM0";
-    const decodedURL = atob(encoded);
-    const proxyURL = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(decodedURL);
+    const hwid = getHWIDFromURL();
     
-    const response = await fetch(proxyURL);
-    if (!response.ok) throw new Error('Fetch failed');
+    if (!hwid) {
+      throw new Error('No HWID parameter found in URL');
+    }
     
-    const text = await response.text();
-    keyInput.value = text.trim();
+    const encodedHWID = toBase64(hwid);
+    keyInput.value = `KEY_${encodedHWID}`;
     
     if (!localStorage.getItem('verificationTime')) {
       setVerifiedFor24Hours();
@@ -457,39 +465,37 @@ async function fetchKey() {
   }
 }
 
-
-
-    async function copyKey() {
-      const keyInput = document.getElementById('keyInput');
-      const btnText = document.getElementById('copyBtnText');
-      const status = document.getElementById('status');
-      if (!keyInput.value || keyInput.value.includes('Failed')) {
-        status.textContent = 'No valid key to copy.';
-        status.className = 'status show error';
-        setTimeout(() => status.className = 'status', 2000);
-        return;
-      }
-      try {
-        await navigator.clipboard.writeText(keyInput.value);
-        btnText.textContent = '✓ Copied!';
-        status.textContent = 'Key copied!';
-        status.className = 'status show';
-        setTimeout(() => {
-          btnText.textContent = 'Copy Key';
-          status.className = 'status';
-        }, 2000);
-      } catch (e) {
-        keyInput.select();
-        document.execCommand('copy');
-        btnText.textContent = '✓ Copied!';
-        status.textContent = 'Key copied!';
-        status.className = 'status show';
-        setTimeout(() => {
-          btnText.textContent = 'Copy Key';
-          status.className = 'status';
-        }, 2000);
-      }
-    }
+async function copyKey() {
+  const keyInput = document.getElementById('keyInput');
+  const btnText = document.getElementById('copyBtnText');
+  const status = document.getElementById('status');
+  if (!keyInput.value || keyInput.value.includes('Failed')) {
+    status.textContent = 'No valid key to copy.';
+    status.className = 'status show error';
+    setTimeout(() => status.className = 'status', 2000);
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(keyInput.value);
+    btnText.textContent = '✓ Copied!';
+    status.textContent = 'Key copied!';
+    status.className = 'status show';
+    setTimeout(() => {
+      btnText.textContent = 'Copy Key';
+      status.className = 'status';
+    }, 2000);
+  } catch (e) {
+    keyInput.select();
+    document.execCommand('copy');
+    btnText.textContent = '✓ Copied!';
+    status.textContent = 'Key copied!';
+    status.className = 'status show';
+    setTimeout(() => {
+      btnText.textContent = 'Copy Key';
+      status.className = 'status';
+    }, 2000);
+  }
+}
 
 function setVerifiedFor24Hours() {
     const now = Date.now();
